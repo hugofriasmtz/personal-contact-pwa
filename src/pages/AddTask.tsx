@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AddTaskButton, Container, StyledInput } from "../styles";
 import { AddTaskRounded, CancelRounded } from "@mui/icons-material";
 import { IconButton, InputAdornment, Tooltip } from "@mui/material";
-import { DESCRIPTION_MAX_LENGTH, TASK_NAME_MAX_LENGTH } from "../constants";
+import { DESCRIPTION_MAX_LENGTH, TASK_NAME_MAX_LENGTH, TASK_PHONE_MAX_LENGTH } from "../constants";
 import { CategorySelect, ColorPicker, TopBar, CustomEmojiPicker } from "../components";
 import { UserContext } from "../contexts/UserContext";
 import { useStorageState } from "../hooks/useStorageState";
@@ -17,15 +17,18 @@ const AddTask = () => {
   const { user, setUser } = useContext(UserContext);
   const theme = useTheme();
   const [name, setName] = useStorageState<string>("", "name", "sessionStorage");
+  const [lastName, setLastName] = useStorageState<string>("", "lastName", "sessionStorage");
+  const [email, setEmail] = useStorageState("", "email", "sessionStorage");
+  const [phoneNumber, setPhoneNumber] = useStorageState("", "phoneNumber", "sessionStorage");
   const [emoji, setEmoji] = useStorageState<string | null>(null, "emoji", "sessionStorage");
   const [color, setColor] = useStorageState<string>(theme.primary, "color", "sessionStorage");
-  const [description, setDescription] = useStorageState<string>(
-    "",
-    "description",
-    "sessionStorage",
+  const [description, setDescription] = useStorageState<string>("", "description", "sessionStorage",
   );
   const [deadline, setDeadline] = useStorageState<string>("", "deadline", "sessionStorage");
   const [nameError, setNameError] = useState<string>("");
+  const [lastNameError, setLastNameError] = useState<string>("");
+  const [emailError, setEmailError] = useState<string>("");
+  const [phoneNumberError, setPhoneNumberError] = useState<string>("");
   const [descriptionError, setDescriptionError] = useState<string>("");
   const [selectedCategories, setSelectedCategories] = useStorageState<Category[]>(
     [],
@@ -38,7 +41,7 @@ const AddTask = () => {
   const n = useNavigate();
 
   useEffect(() => {
-    document.title = "Todo App - Add Task";
+    document.title = "Contacto - Contacto";
   }, []);
 
   useEffect(() => {
@@ -47,6 +50,15 @@ const AddTask = () => {
     } else {
       setNameError("");
     }
+    if (lastName.length > TASK_NAME_MAX_LENGTH) {
+      setLastNameError(`Name should be less than or equal to ${TASK_NAME_MAX_LENGTH} characters`);
+    }
+    if (email.length > TASK_NAME_MAX_LENGTH) {
+      setEmailError(`Name should be less than or equal to ${TASK_NAME_MAX_LENGTH} characters`);
+    }
+    if (phoneNumber.length > TASK_PHONE_MAX_LENGTH) {
+      setPhoneNumberError(`Name should be less than or equal to ${TASK_PHONE_MAX_LENGTH} characters`);
+    }
     if (description.length > DESCRIPTION_MAX_LENGTH) {
       setDescriptionError(
         `Description should be less than or equal to ${DESCRIPTION_MAX_LENGTH} characters`,
@@ -54,7 +66,7 @@ const AddTask = () => {
     } else {
       setDescriptionError("");
     }
-  }, [description.length, name.length]);
+  }, [description.length, name.length, lastName.length]);
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newName = event.target.value;
@@ -63,6 +75,36 @@ const AddTask = () => {
       setNameError(`Name should be less than or equal to ${TASK_NAME_MAX_LENGTH} characters`);
     } else {
       setNameError("");
+    }
+  };
+
+  const handleLastNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newLastName = event.target.value;
+    setLastName(newLastName);
+    if (newLastName.length > TASK_NAME_MAX_LENGTH) {
+      setLastNameError(`Name should be less than or equal to ${TASK_NAME_MAX_LENGTH} characters`);
+    } else {
+      setLastNameError("");
+    }
+  };
+
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newEmail = event.target.value;
+    setEmail(newEmail);
+    if (newEmail.length > TASK_NAME_MAX_LENGTH) {
+      setEmailError(`Name should be less than or equal to ${TASK_NAME_MAX_LENGTH} characters`);
+    } else {
+      setEmailError("");
+    }
+  };
+
+  const handlePhoneNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newPhoneNumber = event.target.value;
+    setPhoneNumber(newPhoneNumber);
+    if (newPhoneNumber.length > TASK_PHONE_MAX_LENGTH) {
+      setPhoneNumberError(`Name should be less than or equal to ${TASK_PHONE_MAX_LENGTH} characters`);
+    } else {
+      setPhoneNumberError("");
     }
   };
 
@@ -84,7 +126,7 @@ const AddTask = () => {
 
   const handleAddTask = () => {
     if (name === "") {
-      showToast("Task name is required.", { type: "error" });
+      showToast("Nombre del contacto es requerido.", { type: "error" });
       return;
     }
 
@@ -97,6 +139,9 @@ const AddTask = () => {
       done: false,
       pinned: false,
       name,
+      lastName,
+      email,
+      phoneNumber,
       description: description !== "" ? description : undefined,
       emoji: emoji ? emoji : undefined,
       color,
@@ -114,22 +159,22 @@ const AddTask = () => {
 
     showToast(
       <div>
-        Added task - <b>{newTask.name}</b>
+        Contacto Guardado - <b>{newTask.name}</b>
       </div>,
       {
         icon: <AddTaskRounded />,
       },
     );
 
-    const itemsToRemove = ["name", "color", "description", "emoji", "deadline", "categories"];
+    const itemsToRemove = ["name","lastName","email","phoneNumber", "color", "description", "emoji", "deadline", "categories"];
     itemsToRemove.map((item) => sessionStorage.removeItem(item));
   };
 
-  //TODO: adjust input hover border colors
+  
 
   return (
     <>
-      <TopBar title="Add New Task" />
+      <TopBar title="Nuevo Contacto" />
       <Container>
         <CustomEmojiPicker
           emoji={typeof emoji === "string" ? emoji : undefined}
@@ -141,9 +186,9 @@ const AddTask = () => {
         {/* fix for input colors */}
         <InputThemeProvider>
           <StyledInput
-            label="Task Name"
+            label="Nombre Completo"
             name="name"
-            placeholder="Enter task name"
+            placeholder="Hugo Frias"
             autoComplete="off"
             value={name}
             onChange={handleNameChange}
@@ -159,9 +204,64 @@ const AddTask = () => {
             }
           />
           <StyledInput
-            label="Task Description"
+            label = "Apellidos"
+            name = "lastName"
+            placeholder = "Frias"
+            autoComplete = "off"
+            value = {lastName}
+            onChange = {handleLastNameChange}
+            required
+            error = {lastNameError !== ""}
+            helpercolor = {lastNameError && ColorPalette.red}
+            helperText = {
+              lastName === ""
+                ? undefined
+                : !lastNameError
+                  ? `${lastName.length}/${TASK_NAME_MAX_LENGTH}`
+                  : lastNameError
+            }
+          />
+          <StyledInput
+            label = "Correo"
+            name = "email"
+            placeholder = "hugo.frias@hotmail.com"
+            autoComplete = "off"
+            value = {email}
+            onChange = {handleEmailChange}
+            required
+            error = {emailError !== ""}
+            helpercolor = {emailError && ColorPalette.red}
+            helperText = {
+              email === ""
+                ? undefined
+                : !emailError
+                  ? `${email.length}/${TASK_NAME_MAX_LENGTH}`
+                  : emailError
+            }
+          />
+
+          <StyledInput
+            label = "Telefono"
+            name = "phoneNumber"
+            placeholder = "1234567890"
+            autoComplete = "off"
+            value = {phoneNumber}
+            onChange = {handlePhoneNumberChange}
+            required
+            error = {phoneNumberError !== ""}
+            helpercolor = {phoneNumberError && ColorPalette.red}
+            helperText = {
+              phoneNumber === ""
+                ? undefined
+                : !phoneNumberError
+                  ? `${phoneNumber.length}/${TASK_PHONE_MAX_LENGTH}`
+                  : phoneNumberError
+            }
+          />
+          <StyledInput
+            label="Descripción"
             name="name"
-            placeholder="Enter task description"
+            placeholder="Haz una descripcion del Contacto"
             autoComplete="off"
             value={description}
             onChange={handleDescriptionChange}
@@ -177,7 +277,7 @@ const AddTask = () => {
                   : descriptionError
             }
           />
-          <StyledInput
+          {/* <StyledInput
             label="Task Deadline"
             name="name"
             placeholder="Enter deadline date"
@@ -202,7 +302,7 @@ const AddTask = () => {
                   </InputAdornment>
                 ) : undefined,
             }}
-          />
+          /> */}
           {user.settings.enableCategories !== undefined && user.settings.enableCategories && (
             <div style={{ marginBottom: "14px" }}>
               <br />
@@ -229,7 +329,7 @@ const AddTask = () => {
             name.length > TASK_NAME_MAX_LENGTH || description.length > DESCRIPTION_MAX_LENGTH
           }
         >
-          Create Task
+          Crear Contacto
         </AddTaskButton>
       </Container>
     </>

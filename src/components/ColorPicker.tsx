@@ -109,7 +109,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
 
   const handleAddColor = () => {
     if (colorList.length >= MAX_COLORS_IN_LIST) {
-      showToast(`You cannot add more than ${MAX_COLORS_IN_LIST} colors to color list.`, {
+      showToast(`No puedes agregar más de ${MAX_COLORS_IN_LIST} colores a la lista de colores.`, {
         type: "error",
       });
       return;
@@ -119,7 +119,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
       colorList.some((color) => color.toLowerCase() === addColorVal.toLowerCase()) ||
       addColorVal.toLowerCase() === theme.primary.toLowerCase()
     ) {
-      showToast("Color is already in color list.", { type: "error" });
+      showToast("El color ya está en la lista de colores.", { type: "error" });
       return;
     }
 
@@ -127,12 +127,12 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
     setUser({ ...user, colorList: [...colorList, addColorVal.toUpperCase()] });
     showToast(
       <div>
-        Added{" "}
+        Añadido{" "}
         <b>
           <ToastColorPreview clr={addColorVal} />
           {getColorName(addColorVal).name}
         </b>{" "}
-        to your color list.
+        a tu lista de colores.
       </div>,
       ToastColorOptions(addColorVal),
     );
@@ -143,12 +143,12 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
     setPopoverOpen(Array(colorList.length).fill(false));
     showToast(
       <div>
-        Removed{" "}
+        Eliminado{" "}
         <b>
           <ToastColorPreview clr={clr} />
           {getColorName(clr).name}
         </b>{" "}
-        from your color list.
+        de tu lista de colores.
       </div>,
       ToastColorOptions(clr),
     );
@@ -190,25 +190,25 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
                       ref={(element) => (colorElementRefs.current[index] = element)}
                       id={`color-element-${index}`}
                       clr={color}
-                      aria-label={`Select color - ${color}`}
-                      // show delete popover only on desktop
+                      aria-label={`Seleccionar color - ${color}`}
+                      // mostrar popover de eliminación solo en escritorio
                       onContextMenu={(e) => {
-                        if (
-                          window.matchMedia("(pointer:fine)").matches &&
-                          color !== theme.primary
-                        ) {
-                          e.preventDefault();
-                          togglePopover(index);
-                        }
+                      if (
+                        window.matchMedia("(pointer:fine)").matches &&
+                        color !== theme.primary
+                      ) {
+                        e.preventDefault();
+                        togglePopover(index);
+                      }
                       }}
                       onClick={() => {
-                        handleColorChange(color);
-                        // show delete popover on mobile only after double tap
-                        if (!window.matchMedia("(pointer:fine)").matches) {
-                          if (selectedColor === color && color !== theme.primary) {
-                            togglePopover(index);
-                          }
+                      handleColorChange(color);
+                      // mostrar popover de eliminación en móvil solo después de doble toque
+                      if (!window.matchMedia("(pointer:fine)").matches) {
+                        if (selectedColor === color && color !== theme.primary) {
+                        togglePopover(index);
                         }
+                      }
                       }}
                     >
                       {color.toUpperCase() === selectedColor.toUpperCase() && <SelectedIcon />}
@@ -238,13 +238,13 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
                   >
                     <div>
                       <DeleteColorBtn onClick={() => handleDeleteColor(color)}>
-                        Delete
+                        Eliminar
                       </DeleteColorBtn>
                     </div>
                   </Popover>
                 </Grid>
               ))}
-              <Tooltip title="Add new color">
+              <Tooltip title="Nuevo Color">
                 <Grid item>
                   <ColorElement
                     clr="transparent"
@@ -257,54 +257,47 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
               </Tooltip>
             </Grid>
           </Grid>
-          <StyledInfo clr={fontColor || ColorPalette.fontLight}>
+            <StyledInfo clr={fontColor || ColorPalette.fontLight}>
             <InfoRounded fontSize="small" />{" "}
-            {window.matchMedia("(pointer:fine)").matches ? "Right click" : "Double tap"} to remove
-            color from list
-          </StyledInfo>
+            {window.matchMedia("(pointer:fine)").matches ? "Haz clic derecho" : "Doble toque"} para eliminar
+            el color de la lista
+            </StyledInfo>
         </AccordionDetails>
       </StyledAccordion>
       <Dialog open={openAddDialog} onClose={handleAddDialogClose}>
         <CustomDialogTitle
-          title="Choose a color"
-          subTitle="Add a new color to the color list."
+          title="Elige un color"
+          subTitle="Añade un nuevo color a la lista de colores."
           icon={<ColorLensRounded />}
           onClose={handleAddDialogClose}
         />
         <DialogContent>
           <DialogPreview>
-            {addColorVal.toUpperCase()} - {getColorName(addColorVal).name}
+        {addColorVal.toUpperCase()} - {getColorName(addColorVal).name}
           </DialogPreview>
           <div style={{ position: "relative" }}>
-            <StyledColorPicker
-              type="color"
-              // list={systemInfo.os === "iOS" ? "color-list" : undefined}
-              value={addColorVal}
-              onChange={(e) => setAddColorVal(e.target.value as string)}
-            />
-            {/* <datalist id="color-list">
-              <option value={theme.primary} />
-              {colorList.map((color) => (
-                <option value={color} key={color} />
-              ))}
-            </datalist> */}
-            <PickerLabel clr={getFontColor(addColorVal)}>
-              <ColorizeRounded /> Choose color
-            </PickerLabel>
+        <StyledColorPicker
+          type="color"
+          value={addColorVal}
+          onChange={(e) => setAddColorVal(e.target.value as string)}
+        />
+        <PickerLabel clr={getFontColor(addColorVal)}>
+          <ColorizeRounded /> Elige color
+        </PickerLabel>
           </div>
         </DialogContent>
         <DialogActions>
-          <DialogBtn onClick={handleAddDialogClose}>Cancel</DialogBtn>
+          <DialogBtn onClick={handleAddDialogClose}>Cancelar</DialogBtn>
           <DialogBtn
-            onClick={() => {
-              onColorChange(addColorVal);
-              handleAddDialogClose();
-            }}
+        onClick={() => {
+          onColorChange(addColorVal);
+          handleAddDialogClose();
+        }}
           >
-            <ColorizeRounded /> &nbsp; Set
+        <ColorizeRounded /> &nbsp; Establecer
           </DialogBtn>
           <DialogBtn onClick={handleAddColor}>
-            <AddRounded /> &nbsp; Add
+        <AddRounded /> &nbsp; Añadir
           </DialogBtn>
         </DialogActions>
       </Dialog>

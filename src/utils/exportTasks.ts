@@ -7,7 +7,7 @@ import type { Task } from "../types/user";
 export const exportTasksToJson = (selectedTasks: Task[]): void => {
   // Get the current date and time for the filename
   const timestamp = new Date().toLocaleString().replace(/[/:, ]/g, "_");
-  const filename = `Tasks_${timestamp}.json`;
+  const filename = `Contacto${timestamp}.json`;
 
   // Create a JSON blob
   const dataStr = JSON.stringify(selectedTasks, null, 2);
@@ -21,7 +21,7 @@ export const exportTasksToJson = (selectedTasks: Task[]): void => {
   linkElement.href = url;
   linkElement.download = filename;
   linkElement.click();
-  console.log(`Exported tasks to ${filename}`);
+  console.log(`Contacto exportado a ${filename}`);
   // Clean up the URL object
   window.URL.revokeObjectURL(url);
 };

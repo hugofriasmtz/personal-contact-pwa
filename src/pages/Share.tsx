@@ -63,7 +63,7 @@ const SharePage = () => {
         (task.category && task.category.some((cat) => !isHexColor(cat.color)))
       ) {
         setError(true);
-        setErrorDetails("Invalid task or category color format.");
+        setErrorDetails("Formato de color de Contacto o categoría inválido.");
         return;
       }
 
@@ -101,7 +101,7 @@ const SharePage = () => {
   }, [taskParam, userNameParam]);
 
   useEffect(() => {
-    document.title = `Todo App - Recieved Task ${taskData ? "(" + taskData.name + ")" : ""}`;
+    document.title = `Contacto - Contacto Recibido ${taskData ? "(" + taskData.name + ")" : ""}`;
   }, [taskData]);
 
   const handleAddTask = () => {

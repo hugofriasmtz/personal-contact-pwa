@@ -278,87 +278,86 @@ export const CustomEmojiPicker = ({ emoji, setEmoji, color, name, type }: EmojiP
 
       {showEmojiPicker && !settings.simpleEmojiPicker && (
         <>
-          <Dialog
+            <Dialog
             open={showEmojiPicker}
             onClose={toggleEmojiPicker}
             PaperProps={{
               style: {
-                padding: "12px",
-                borderRadius: "24px",
-                minWidth: "400px",
+              padding: "12px",
+              borderRadius: "24px",
+              minWidth: "400px",
               },
             }}
-          >
+            >
             <CustomDialogTitle
-              title="Choose Emoji"
-              subTitle={`Choose the perfect emoji for your ${type}.`}
+              title="Elige Emoji"
+              subTitle={`Elige el emoji perfecto para tu ${type}.`}
               onClose={toggleEmojiPicker}
               icon={<AddReaction />}
             />
             <DialogContent sx={{ p: 0, m: 0 }}>
               {!isOnline && emojisStyle !== EmojiStyle.NATIVE && (
-                <Box sx={{ mx: "14px", mb: "16px" }}>
-                  <Alert severity="warning">
-                    Emojis may not load correctly when offline. Try switching to the native emoji
-                    style.
-                  </Alert>
-                  <Button
-                    variant="outlined"
-                    color="warning"
-                    fullWidth
-                    sx={{ mt: "14px" }}
-                    onClick={() => {
-                      setUser((prevUser) => ({
-                        ...prevUser,
-                        emojisStyle: EmojiStyle.NATIVE,
-                      }));
-                      // setShowEmojiPicker(false);
-                    }}
-                  >
-                    <EmojiEmotions /> &nbsp; Switch to Native Emoji
-                  </Button>
-                </Box>
+              <Box sx={{ mx: "14px", mb: "16px" }}>
+                <Alert severity="warning">
+                Los emojis pueden no cargarse correctamente cuando estás desconectado. Intenta cambiar al estilo de emoji nativo.
+                </Alert>
+                <Button
+                variant="outlined"
+                color="warning"
+                fullWidth
+                sx={{ mt: "14px" }}
+                onClick={() => {
+                  setUser((prevUser) => ({
+                  ...prevUser,
+                  emojisStyle: EmojiStyle.NATIVE,
+                  }));
+                  // setShowEmojiPicker(false);
+                }}
+                >
+                <EmojiEmotions /> &nbsp; Cambiar a Emoji Nativo
+                </Button>
+              </Box>
               )}
               <EmojiPickerContainer>
-                <Suspense
-                  fallback={
-                    !settings.simpleEmojiPicker && (
-                      <PickerLoader
-                        pickerTheme={emotionTheme.darkmode ? "dark" : "light"}
-                      ></PickerLoader>
-                    )
-                  }
-                >
-                  <EmojiPicker
-                    width="100vw"
-                    height="550px"
-                    reactionsDefaultOpen={
-                      settings.simpleEmojiPicker && getFrequentlyUsedEmojis().length !== 0
-                    }
-                    reactions={getFrequentlyUsedEmojis()}
-                    emojiStyle={emojisStyle}
-                    theme={emotionTheme.darkmode ? Theme.DARK : Theme.LIGHT}
-                    suggestedEmojisMode={SuggestionMode.FREQUENT}
-                    autoFocusSearch={false}
-                    onEmojiClick={handleEmojiClick}
-                    searchPlaceHolder="Search emoji"
-                    previewConfig={{
-                      defaultEmoji: "1f4dd",
-                      defaultCaption: `Choose the perfect emoji for your ${type}`,
-                    }}
-                  />
-                </Suspense>
+              <Suspense
+                fallback={
+                !settings.simpleEmojiPicker && (
+                  <PickerLoader
+                  pickerTheme={emotionTheme.darkmode ? "dark" : "light"}
+                  ></PickerLoader>
+                )
+                }
+              >
+                <EmojiPicker
+                width="100vw"
+                height="550px"
+                reactionsDefaultOpen={
+                  settings.simpleEmojiPicker && getFrequentlyUsedEmojis().length !== 0
+                }
+                reactions={getFrequentlyUsedEmojis()}
+                emojiStyle={emojisStyle}
+                theme={emotionTheme.darkmode ? Theme.DARK : Theme.LIGHT}
+                suggestedEmojisMode={SuggestionMode.FREQUENT}
+                autoFocusSearch={false}
+                onEmojiClick={handleEmojiClick}
+                searchPlaceHolder="Buscar emoji"
+                previewConfig={{
+                  defaultEmoji: "1f4dd",
+                  defaultCaption: `Elige el emoji perfecto para tu ${type}`,
+                }}
+                />
+              </Suspense>
               </EmojiPickerContainer>
             </DialogContent>
             <DialogActions>
               {currentEmoji && (
-                <DialogBtn color="error" onClick={handleRemoveEmoji}>
-                  <RemoveCircleOutline /> &nbsp; Remove Emoji
-                </DialogBtn>
+              <DialogBtn color="error" onClick={handleRemoveEmoji}>
+                <RemoveCircleOutline /> &nbsp; Eliminar Emoji
+              </DialogBtn>
               )}
-              <DialogBtn onClick={toggleEmojiPicker}>Cancel</DialogBtn>
+              <DialogBtn onClick={toggleEmojiPicker}>Cancelar</DialogBtn>
             </DialogActions>
-          </Dialog>
+            </Dialog>
         </>
       )}
     </>

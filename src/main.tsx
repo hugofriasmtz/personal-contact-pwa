@@ -19,7 +19,7 @@ registerSW({
     }
   },
   onOfflineReady() {
-    showToast("App is ready to work offline.", { type: "success", duration: 2000 });
+    showToast("La aplicacion esta lista para trabajar Offline.", { type: "success", duration: 2000 });
   },
 });
 

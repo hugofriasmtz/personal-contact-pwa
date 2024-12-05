@@ -81,9 +81,9 @@ export const TaskMenu = () => {
       if (allTasksDone) {
         showToast(
           <div>
-            <b>All tasks done</b>
+            <b>Todas las tareas completadas</b>
             <br />
-            <span>You've checked off all your todos. Well done!</span>
+            <span>Has marcado todas las tareas como completadas. ¡Bien hecho!</span>
           </div>,
           {
             icon: (
@@ -152,13 +152,13 @@ export const TaskMenu = () => {
     }).format(new Date(selectedTask?.date || ""));
 
     const taskDeadline = selectedTask?.deadline
-      ? `. Task Deadline: ${calculateDateDifference(
+      ? `. Fecha límite de la tarea: ${calculateDateDifference(
           new Date(selectedTask.deadline),
           voice ? voice.lang : navigator.language,
         )}`
       : "";
 
-    const textToRead = `${taskName}. ${taskDescription}. Date: ${taskDate}${taskDeadline}`;
+    const textToRead = `${taskName}. ${taskDescription}. Fecha: ${taskDate}${taskDeadline}`;
 
     const utterThis: SpeechSynthesisUtterance = new SpeechSynthesisUtterance(textToRead);
 
@@ -193,10 +193,10 @@ export const TaskMenu = () => {
         return (
           <ReadAloudContainer>
             <ReadAloudHeader translate="yes">
-              <RecordVoiceOver /> Read aloud: <span translate="no">{selectedTask?.name}</span>
+              <RecordVoiceOver /> Leer en voz alta: <span translate="no">{selectedTask?.name}</span>
             </ReadAloudHeader>
             <span translate="yes" style={{ marginTop: "8px", fontSize: "16px" }}>
-              Voice: <span translate="no">{utterThis.voice?.name || "Default"}</span>
+              Voz: <span translate="no">{utterThis.voice?.name || "Predeterminada"}</span>
             </span>
             <div translate="no">
               <Marquee delay={0.6} play={isPlaying}>
@@ -254,23 +254,15 @@ export const TaskMenu = () => {
 
   const menuItems: JSX.Element = (
     <div>
-      <StyledMenuItem onClick={handleMarkAsDone}>
-        {selectedTask.done ? <Close /> : <Done />}
-        &nbsp; {selectedTask.done ? "Mark as not done" : "Mark as done"}
-      </StyledMenuItem>
       <StyledMenuItem onClick={handlePin}>
         <PushPinRounded sx={{ textDecoration: "line-through" }} />
         &nbsp; {selectedTask.pinned ? "Unpin" : "Pin"}
       </StyledMenuItem>
 
-      {multipleSelectedTasks.length === 0 && (
-        <StyledMenuItem onClick={() => handleSelectTask(selectedTaskId || generateUUID())}>
-          <RadioButtonChecked /> &nbsp; Select
-        </StyledMenuItem>
-      )}
+     
 
       <StyledMenuItem onClick={redirectToTaskDetails}>
-        <LaunchRounded /> &nbsp; Task details
+        <LaunchRounded /> &nbsp; Informacion del Contacto
       </StyledMenuItem>
 
       {settings.enableReadAloud && (
@@ -278,19 +270,9 @@ export const TaskMenu = () => {
           onClick={handleReadAloud}
           disabled={window.speechSynthesis.speaking || window.speechSynthesis.pending}
         >
-          <RecordVoiceOverRounded /> &nbsp; Read Aloud
+          <RecordVoiceOverRounded /> &nbsp; Leer en Voz alta
         </StyledMenuItem>
       )}
-
-      <StyledMenuItem
-        onClick={() => {
-          setShowShareDialog(true);
-          handleCloseMoreMenu();
-        }}
-      >
-        <LinkRounded /> &nbsp; Share
-      </StyledMenuItem>
-
       <Divider />
       <StyledMenuItem
         onClick={() => {
@@ -298,10 +280,10 @@ export const TaskMenu = () => {
           handleCloseMoreMenu();
         }}
       >
-        <EditRounded /> &nbsp; Edit
+        <EditRounded /> &nbsp; Editar
       </StyledMenuItem>
       <StyledMenuItem onClick={handleDuplicateTask}>
-        <ContentCopy /> &nbsp; Duplicate
+        <ContentCopy /> &nbsp; Duplicar
       </StyledMenuItem>
       <Divider />
       <StyledMenuItem
@@ -311,7 +293,7 @@ export const TaskMenu = () => {
           handleCloseMoreMenu();
         }}
       >
-        <DeleteRounded /> &nbsp; Delete
+        <DeleteRounded /> &nbsp; Eliminar
       </StyledMenuItem>
     </div>
   );

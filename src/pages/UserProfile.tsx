@@ -39,7 +39,7 @@ const UserProfile = () => {
   const [openSettings, setOpenSettings] = useState<boolean>(false);
 
   useEffect(() => {
-    document.title = `Todo App - User ${name ? `(${name})` : ""}`;
+    document.title = `Contactos - Usuario ${name ? `(${name})` : ""}`;
   }, [name]);
 
   const handleSaveName = () => {
@@ -48,11 +48,11 @@ const UserProfile = () => {
 
       showToast(
         <div>
-          Changed user name
+          Nombre de usuario cambiado
           {userName && (
             <>
               {" "}
-              to <b translate="no">{userName}</b>
+              a <b translate="no">{userName}</b>
             </>
           )}
           .
@@ -76,7 +76,7 @@ const UserProfile = () => {
   const handleLogout = () => {
     setUser(defaultUser);
     handleLogoutConfirmationClose();
-    showToast("You have been successfully logged out");
+    showToast("Has cerrado sesión exitosamente");
   };
 
   const handleSaveImage = () => {
@@ -89,15 +89,15 @@ const UserProfile = () => {
         ...prevUser,
         profilePicture: profilePictureURL,
       }));
-      showToast("Changed profile picture.");
+      showToast("Imagen de perfil cambiada.");
     }
   };
 
   return (
     <>
-      <TopBar title="User Profile" />
+      <TopBar title="Perfil de Usuario" />
       <Container>
-        <Tooltip title="App Settings">
+        <Tooltip title="Configuración">
           <IconButton
             onClick={() => setOpenSettings(true)}
             aria-label="Settings"
@@ -111,20 +111,20 @@ const UserProfile = () => {
             <Settings fontSize="large" />
           </IconButton>
         </Tooltip>
-        <Tooltip title={profilePicture ? "Change profile picture" : "Add profile picture"}>
+        <Tooltip title={profilePicture ? "Cambiar foto de perfil" : "Agregar foto de perfil"}>
           <Badge
             overlap="circular"
             anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
             badgeContent={
               <Avatar
-                onClick={handleOpenImageDialog}
-                sx={{
-                  background: "#9c9c9c81",
-                  backdropFilter: "blur(10px)",
-                  cursor: "pointer",
-                }}
+          onClick={handleOpenImageDialog}
+          sx={{
+            background: "#9c9c9c81",
+            backdropFilter: "blur(10px)",
+            cursor: "pointer",
+          }}
               >
-                <AddAPhotoRounded />
+          <AddAPhotoRounded />
               </Avatar>
             }
           >
@@ -139,7 +139,7 @@ const UserProfile = () => {
             </UserAvatar>
           </Badge>
         </Tooltip>
-        <UserName translate={name ? "no" : "yes"}>{name || "User"}</UserName>
+        <UserName translate={name ? "no" : "yes"}>{name || "Usuario"}</UserName>
         <Tooltip
           title={new Intl.DateTimeFormat(navigator.language, {
             dateStyle: "full",
@@ -148,25 +148,25 @@ const UserProfile = () => {
         >
           <CreatedAtDate>
             <TodayRounded fontSize="small" />
-            &nbsp;Registered {timeAgo(createdAt)}
+            &nbsp;Restigrado {timeAgo(createdAt)}
           </CreatedAtDate>
         </Tooltip>
 
         <TextField
           sx={{ width: "300px", marginTop: "8px" }}
-          label={name === null ? "Add Name" : "Change Name"}
+          label={name === null ? "Agregar Nombre" : "Cambiar Nombre"}
           value={userName}
           onChange={(e) => setUserName(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSaveName()}
           error={userName.length > USER_NAME_MAX_LENGTH || (userName === name && name !== "")}
           helperText={
             userName.length > USER_NAME_MAX_LENGTH
-              ? `Name exceeds ${USER_NAME_MAX_LENGTH} characters`
+              ? `El nombre excede los ${USER_NAME_MAX_LENGTH} caracteres`
               : userName.length > 0 && userName !== name
-                ? `${userName.length}/${USER_NAME_MAX_LENGTH}`
-                : userName === name && name !== ""
-                  ? "New username matches old one."
-                  : ""
+          ? `${userName.length}/${USER_NAME_MAX_LENGTH}`
+          : userName === name && name !== ""
+            ? "El nuevo nombre de usuario coincide con el anterior."
+            : ""
           }
           autoComplete="nickname"
         />
@@ -175,7 +175,7 @@ const UserProfile = () => {
           onClick={handleSaveName}
           disabled={userName.length > USER_NAME_MAX_LENGTH || userName === name}
         >
-          Save name
+          Guardar Nombre
         </SaveBtn>
         <Button
           color="error"
@@ -184,83 +184,83 @@ const UserProfile = () => {
           onClick={() => setLogoutConfirmationOpen(true)}
         >
           <Logout />
-          &nbsp; Logout
+          &nbsp; Salir
         </Button>
       </Container>
       <Dialog open={openChangeImage} onClose={handleCloseImageDialog}>
         <CustomDialogTitle
-          title="Profile Picture"
-          subTitle="Change or delete profile picture"
+          title="Foto de Perfil"
+          subTitle="Cambiar o eliminar foto de perfil"
           onClose={handleCloseImageDialog}
           icon={<AddAPhotoRounded />}
         />
         <DialogContent>
           <TextField
-            autoFocus
-            label="Link to profile picture"
-            placeholder="Enter link to profile picture..."
-            sx={{ my: "8px", width: "100%" }}
-            value={profilePictureURL}
-            onChange={(e) => {
-              setProfilePictureURL(e.target.value);
-            }}
-            onKeyDown={(e) => e.key === "Enter" && handleSaveImage()}
-            error={profilePictureURL.length > PROFILE_PICTURE_MAX_LENGTH}
-            helperText={
-              profilePictureURL.length > PROFILE_PICTURE_MAX_LENGTH
-                ? `URL is too long maximum ${PROFILE_PICTURE_MAX_LENGTH} characters`
-                : ""
-            }
-            autoComplete="url"
-            type="url"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <LinkRounded />
-                </InputAdornment>
-              ),
-            }}
+        autoFocus
+        label="Enlace a la foto de perfil"
+        placeholder="Introduce el enlace a la foto de perfil..."
+        sx={{ my: "8px", width: "100%" }}
+        value={profilePictureURL}
+        onChange={(e) => {
+          setProfilePictureURL(e.target.value);
+        }}
+        onKeyDown={(e) => e.key === "Enter" && handleSaveImage()}
+        error={profilePictureURL.length > PROFILE_PICTURE_MAX_LENGTH}
+        helperText={
+          profilePictureURL.length > PROFILE_PICTURE_MAX_LENGTH
+            ? `La URL es demasiado larga, máximo ${PROFILE_PICTURE_MAX_LENGTH} caracteres`
+            : ""
+        }
+        autoComplete="url"
+        type="url"
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+          <LinkRounded />
+            </InputAdornment>
+          ),
+        }}
           />
 
           <br />
           {profilePicture !== null && (
-            <Button
-              fullWidth
-              onClick={() => {
-                handleCloseImageDialog();
-                showToast("Deleted profile image.");
-                setUser({ ...user, profilePicture: null });
-              }}
-              color="error"
-              variant="outlined"
-              sx={{ margin: "16px 0", p: "12px 20px", borderRadius: "14px" }}
-            >
-              <Delete /> &nbsp; Delete Image
-            </Button>
+        <Button
+          fullWidth
+          onClick={() => {
+            handleCloseImageDialog();
+            showToast("Imagen de perfil eliminada.");
+            setUser({ ...user, profilePicture: null });
+          }}
+          color="error"
+          variant="outlined"
+          sx={{ margin: "16px 0", p: "12px 20px", borderRadius: "14px" }}
+        >
+          <Delete /> &nbsp; Eliminar Imagen
+        </Button>
           )}
         </DialogContent>
         <DialogActions>
-          <DialogBtn onClick={handleCloseImageDialog}>Cancel</DialogBtn>
+          <DialogBtn onClick={handleCloseImageDialog}>Cancelar</DialogBtn>
           <DialogBtn
-            disabled={
-              profilePictureURL.length > PROFILE_PICTURE_MAX_LENGTH ||
-              !profilePictureURL.startsWith("https://")
-            }
-            onClick={handleSaveImage}
+        disabled={
+          profilePictureURL.length > PROFILE_PICTURE_MAX_LENGTH ||
+          !profilePictureURL.startsWith("https://")
+        }
+        onClick={handleSaveImage}
           >
-            <SaveRounded /> &nbsp; Save
+        <SaveRounded /> &nbsp; Guardar
           </DialogBtn>
         </DialogActions>
       </Dialog>
       <Dialog open={logoutConfirmationOpen} onClose={handleLogoutConfirmationClose}>
-        <CustomDialogTitle title="Logout Confirmation" icon={<Logout />} />
+        <CustomDialogTitle title="Confirmación de Cierre de Sesión" icon={<Logout />} />
         <DialogContent>
-          Are you sure you want to logout? <b>Your tasks will not be saved.</b>
+          ¿Estás seguro de que deseas cerrar sesión? <b>Tus Contactos no se guardarán.</b>
         </DialogContent>
         <DialogActions>
-          <DialogBtn onClick={handleLogoutConfirmationClose}>Cancel</DialogBtn>
+          <DialogBtn onClick={handleLogoutConfirmationClose}>Cancelar</DialogBtn>
           <DialogBtn onClick={handleLogout} color="error">
-            <Logout /> &nbsp; Logout
+        <Logout /> &nbsp; Salir
           </DialogBtn>
         </DialogActions>
       </Dialog>

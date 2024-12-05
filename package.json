@@ -1,15 +1,15 @@
 {
-  "name": "todoapp",
+  "name": "personal-contact-pwa",
   "author": {
-    "name": "Maciej Twaróg",
-    "url": "https://github.com/maciekt07"
+    "name": "Hugo Frias",
+    "url": "https://github.com/hugofriasmtz"
   },
   "private": true,
   "type": "module",
   "homepage": "https://react-cool-todo-app.netlify.app/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/maciekt07/TodoApp.git"
+    "url": "git+https://github.com/hugofriasmtz/personal-contact-pwa.git"
   },
   "license": "MIT",
   "scripts": {

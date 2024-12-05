@@ -106,7 +106,7 @@ export const ProfileSidebar = () => {
   const handleLogout = () => {
     setUser(defaultUser);
     handleLogoutConfirmationClose();
-    showToast("You have been successfully logged out");
+    showToast("Has cerrado sesión exitosamente");
   };
 
   interface BeforeInstallPromptEvent extends Event {
@@ -163,12 +163,12 @@ export const ProfileSidebar = () => {
           if (systemInfo.os === "Windows") {
             setOpenInstalledDialog(true);
           } else {
-            showToast("App installed successfully!");
+            showToast("¡Aplicación instalada con éxito!");
           }
           handleClose();
         }
         if (choiceResult.outcome === "dismissed") {
-          showToast("Installation dismissed.", { type: "error" });
+            showToast("Instalación cancelada.", { type: "error" });
         }
       });
     }
@@ -176,7 +176,7 @@ export const ProfileSidebar = () => {
 
   return (
     <Container>
-      <Tooltip title={<div translate={name ? "no" : "yes"}>{name || "User"}</div>}>
+      <Tooltip title={<div translate={name ? "no" : "yes"}>{name || "Usuario"}</div>}>
         <IconButton
           aria-label="Sidebar"
           aria-controls={open ? "basic-menu" : undefined}
@@ -187,7 +187,7 @@ export const ProfileSidebar = () => {
         >
           <UserAvatar
             src={(profilePicture as string) || undefined}
-            alt={name || "User"}
+            alt={name || "Usuario"}
             hasimage={profilePicture !== null}
             pulse={
               user.name === defaultUser.name &&
@@ -201,8 +201,8 @@ export const ProfileSidebar = () => {
                 ...prevUser,
                 profilePicture: null,
               }));
-              showToast("Error in profile picture URL", { type: "error" });
-              throw new Error("Error in profile picture URL");
+                showToast("Error en la URL de la imagen de perfil", { type: "error" });
+                throw new Error("Error en la URL de la imagen de perfil");
             }}
           >
             {name ? name[0].toUpperCase() : undefined}
@@ -227,14 +227,14 @@ export const ProfileSidebar = () => {
         >
           <Logo src={logo} alt="logo" />
           <LogoText>
-            <span>Todo</span> App
+            <span>Agenda</span> Personal
             <span>.</span>
           </LogoText>
         </LogoContainer>
 
         <MenuLink to="/">
           <StyledMenuItem onClick={handleClose}>
-            <TaskAltRounded /> &nbsp; Tasks
+            <TaskAltRounded /> &nbsp; Contactos
             {tasks.filter((task) => !task.done).length > 0 && (
               <Tooltip title={`${tasks.filter((task) => !task.done).length} tasks to do`}>
                 <MenuLabel>
@@ -249,79 +249,24 @@ export const ProfileSidebar = () => {
 
         <MenuLink to="/add">
           <StyledMenuItem onClick={handleClose}>
-            <AddRounded /> &nbsp; Add Task
+            <AddRounded /> &nbsp; Agregar Contacto
           </StyledMenuItem>
         </MenuLink>
 
         {settings.enableCategories !== undefined && settings.enableCategories && (
           <MenuLink to="/categories">
             <StyledMenuItem onClick={handleClose}>
-              <CategoryRounded /> &nbsp; Categories
+              <CategoryRounded /> &nbsp; Categorias
             </StyledMenuItem>
           </MenuLink>
         )}
 
-        <MenuLink to="/purge">
-          <StyledMenuItem onClick={handleClose}>
-            <DeleteForeverRounded /> &nbsp; Purge Tasks
-          </StyledMenuItem>
-        </MenuLink>
-
-        <MenuLink to="/transfer">
-          <StyledMenuItem onClick={handleClose}>
-            <GetAppRounded /> &nbsp; Transfer
-          </StyledMenuItem>
-        </MenuLink>
 
         <StyledDivider />
 
-        <MenuLink to="https://github.com/maciekt07/TodoApp">
-          <StyledMenuItem translate="no">
+        <MenuLink to="https://github.com/hugofriasmtz">
+          <StyledMenuItem translate="yes">
             <GitHub /> &nbsp; Github{" "}
-            {stars && (
-              <Tooltip title={`${stars} stars on Github`}>
-                <MenuLabel clr="#ff9d00">
-                  <span style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <StarRounded style={{ fontSize: "18px" }} />
-                    &nbsp;{stars}
-                  </span>
-                </MenuLabel>
-              </Tooltip>
-            )}
-          </StyledMenuItem>
-        </MenuLink>
-
-        <MenuLink to="https://github.com/maciekt07/TodoApp/issues/new">
-          <StyledMenuItem>
-            <BugReportRounded /> &nbsp; Report Issue{" "}
-            {Boolean(issuesCount || issuesCount === 0) && (
-              <Tooltip title={`${issuesCount} open issues`}>
-                <MenuLabel clr="#3bb61c">
-                  <span style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <AdjustRounded style={{ fontSize: "18px" }} />
-                    &nbsp;
-                    {issuesCount}
-                  </span>
-                </MenuLabel>
-              </Tooltip>
-            )}
-          </StyledMenuItem>
-        </MenuLink>
-
-        <MenuLink to="https://www.buymeacoffee.com/maciekt07">
-          <StyledMenuItem className="bmcMenu">
-            <BmcIcon className="bmc-icon" src={theme.darkmode ? bmcLogoLight : bmcLogo} /> &nbsp;
-            Buy me a coffee{" "}
-            {bmcSupporters && (
-              <Tooltip title={`${bmcSupporters} supporters on Buy me a coffee`}>
-                <MenuLabel clr="#f93c58">
-                  <span style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <FavoriteRounded style={{ fontSize: "16px" }} />
-                    &nbsp;{bmcSupporters}
-                  </span>
-                </MenuLabel>
-              </Tooltip>
-            )}
           </StyledMenuItem>
         </MenuLink>
 
@@ -330,7 +275,7 @@ export const ProfileSidebar = () => {
         {supportsPWA && !isAppInstalled && (
           <StyledMenuItem onClick={installPWA}>
             {systemInfo.os === "Android" ? <InstallMobileRounded /> : <InstallDesktopRounded />}
-            &nbsp; Install App
+            &nbsp; Acceso Directo
           </StyledMenuItem>
         )}
 
@@ -340,23 +285,23 @@ export const ProfileSidebar = () => {
             <StyledMenuItem
               onClick={() => {
                 showToast(
-                  <div style={{ display: "inline-block" }}>
-                    To install the app on iOS Safari, click on{" "}
-                    <IosShareRounded sx={{ verticalAlign: "middle", mb: "4px" }} /> and then{" "}
-                    <span style={{ fontWeight: "bold" }}>Add to Home Screen</span>.
-                  </div>,
+                    <div style={{ display: "inline-block" }}>
+                    Para instalar la aplicación en iOS Safari, haz clic en{" "}
+                    <IosShareRounded sx={{ verticalAlign: "middle", mb: "4px" }} /> y luego{" "}
+                    <span style={{ fontWeight: "bold" }}>Agregar a la pantalla de inicio</span>.
+                    </div>,
                   { type: "blank", duration: 8000 },
                 );
                 handleClose();
               }}
             >
               <PhoneIphoneRounded />
-              &nbsp; Install App
+              &nbsp; Instala la App 
             </StyledMenuItem>
           )}
 
         <StyledMenuItem onClick={handleLogoutConfirmationOpen} sx={{ color: "#ff4040 !important" }}>
-          <Logout /> &nbsp; Logout
+          <Logout /> &nbsp; Cerrar Sesión
         </StyledMenuItem>
 
         <ProfileOptionsBottom>
@@ -366,7 +311,7 @@ export const ProfileSidebar = () => {
               handleClose();
             }}
           >
-            <SettingsRounded /> &nbsp; Settings
+            <SettingsRounded /> &nbsp; Cofiguracion
             {JSON.stringify(settings) === JSON.stringify(defaultUser.settings) &&
               user.darkmode === defaultUser.darkmode &&
               user.theme === defaultUser.theme &&
@@ -388,51 +333,24 @@ export const ProfileSidebar = () => {
             </ProfileMenuItem>
           </MenuLink>
 
-          <StyledDivider />
+      
 
-          <CreditsContainer translate="no">
-            <span style={{ display: "flex", alignItems: "center" }}>
-              Made with &nbsp;
-              <Favorite sx={{ fontSize: "14px" }} />
-            </span>
-            <span style={{ marginLeft: "6px", marginRight: "4px" }}>by</span>
-            <a
-              style={{ textDecoration: "none", color: "inherit" }}
-              href="https://github.com/maciekt07"
-            >
-              maciekt07
-            </a>
-          </CreditsContainer>
-          <CreditsContainer>
-            {lastUpdate && (
-              <Tooltip title={timeAgo(new Date(lastUpdate))}>
-                <span>
-                  Last update:{" "}
-                  {new Intl.DateTimeFormat(navigator.language, {
-                    dateStyle: "long",
-                    timeStyle: "medium",
-                  }).format(new Date(lastUpdate))}
-                </span>
-              </Tooltip>
-            )}
-          </CreditsContainer>
         </ProfileOptionsBottom>
       </StyledSwipeableDrawer>
 
       <Dialog open={openInstalledDialog} onClose={() => setOpenInstalledDialog(false)}>
         <CustomDialogTitle
-          title="App installed successfully!"
-          subTitle="The app is now running as a PWA."
+          title="¡Aplicación instalada con éxito!"
+          subTitle="La aplicación ahora se está ejecutando como PWA."
           icon={<DownloadDoneRounded />}
           onClose={() => setOpenInstalledDialog(false)}
         />
         <DialogContent>
-          You can access it from your home screen, with offline support and features like shortcuts
-          and badges.
+          Puedes acceder a ella desde tu pantalla de inicio, con soporte sin conexión y funciones como accesos directo.
         </DialogContent>
         <DialogActions>
           <DialogBtn onClick={() => setOpenInstalledDialog(false)}>
-            <ThumbUpRounded /> &nbsp; Got it
+        <ThumbUpRounded /> &nbsp; Entendido
           </DialogBtn>
         </DialogActions>
       </Dialog>
@@ -440,12 +358,12 @@ export const ProfileSidebar = () => {
       <Dialog open={logoutConfirmationOpen} onClose={handleLogoutConfirmationClose}>
         <CustomDialogTitle title="Logout Confirmation" icon={<Logout />} />
         <DialogContent>
-          Are you sure you want to logout? <b>Your tasks will not be saved.</b>
+          ¿Estás seguro de que deseas cerrar sesión? <b>Tus Contactos no se guardarán.</b>
         </DialogContent>
         <DialogActions>
-          <DialogBtn onClick={handleLogoutConfirmationClose}>Cancel</DialogBtn>
+          <DialogBtn onClick={handleLogoutConfirmationClose}>Cancelar</DialogBtn>
           <DialogBtn onClick={handleLogout} color="error">
-            <Logout /> &nbsp; Logout
+            <Logout /> &nbsp; Salir
           </DialogBtn>
         </DialogActions>
       </Dialog>
@@ -647,7 +565,7 @@ const Logo = styled.img`
 
 const LogoText = styled.h2`
   & span {
-    color: #7764e8;
+    color: #f48a17;
   }
 `;
 

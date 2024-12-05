@@ -269,340 +269,335 @@ export const SettingsDialog: React.FC<SettingsProps> = ({ open, onClose }) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <CustomDialogTitle
-        title="Settings"
-        subTitle="Manage your settings and preferences."
-        icon={<SettingsRounded />}
-        onClose={onClose}
+      title="Configuraciones"
+      subTitle="Configura tú Agenda."
+      icon={<SettingsRounded />}
+      onClose={onClose}
       />
       <Container>
-        <FormGroup>
-          <FormControl>
-            <FormLabel>Dark Mode</FormLabel>
-            <StyledSelect
-              value={darkmode}
-              onChange={handleDarkModeChange}
-              IconComponent={ExpandMoreRounded}
-            >
-              {darkModeOptions.map((option) => (
-                <StyledMenuItem key={option.mode} value={option.mode}>
-                  {option.icon}&nbsp;{option.label}
-                  {option.mode === "system" && ` (${systemTheme})`}
-                  {option.mode === "auto" && ` (${isDark(theme.secondary) ? "dark" : "light"})`}
-                </StyledMenuItem>
-              ))}
-            </StyledSelect>
-          </FormControl>
-        </FormGroup>
+      <FormGroup>
+        <FormControl>
+        <FormLabel>Modo Oscuro</FormLabel>
+        <StyledSelect
+          value={darkmode}
+          onChange={handleDarkModeChange}
+          IconComponent={ExpandMoreRounded}
+        >
+          {darkModeOptions.map((option) => (
+          <StyledMenuItem key={option.mode} value={option.mode}>
+            {option.icon}&nbsp;{option.label}
+            {option.mode === "system" && ` (${systemTheme})`}
+            {option.mode === "auto" && ` (${isDark(theme.secondary) ? "oscuro" : "claro"})`}
+          </StyledMenuItem>
+          ))}
+        </StyledSelect>
+        </FormControl>
+      </FormGroup>
 
-        <FormGroup>
-          <FormControl>
-            <FormLabel>App Theme</FormLabel>
-            <StyledSelect
-              value={user.theme}
-              onChange={handleAppThemeChange}
-              IconComponent={ExpandMoreRounded}
-            >
-              <StyledMenuItem value="system">
-                <PersonalVideoRounded />
-                &nbsp; System ({systemTheme})
-              </StyledMenuItem>
-              {Themes.map((theme) => (
-                <StyledMenuItem key={theme.name} value={theme.name}>
-                  <ColorElement
-                    clr={theme.MuiTheme.palette.primary.main}
-                    secondClr={theme.MuiTheme.palette.secondary.main}
-                    aria-label={`Change theme - ${theme.name}`}
-                    size="24px"
-                    disableHover
-                  />
-                  &nbsp;
-                  {theme.name}
-                </StyledMenuItem>
-              ))}
-            </StyledSelect>
-          </FormControl>
-        </FormGroup>
+      <FormGroup>
+        <FormControl>
+        <FormLabel>Tema de la App</FormLabel>
+        <StyledSelect
+          value={user.theme}
+          onChange={handleAppThemeChange}
+          IconComponent={ExpandMoreRounded}
+        >
+          <StyledMenuItem value="system">
+          <PersonalVideoRounded />
+          &nbsp; Sistema ({systemTheme})
+          </StyledMenuItem>
+          {Themes.map((theme) => (
+          <StyledMenuItem key={theme.name} value={theme.name}>
+            <ColorElement
+            clr={theme.MuiTheme.palette.primary.main}
+            secondClr={theme.MuiTheme.palette.secondary.main}
+            aria-label={`Cambiar tema - ${theme.name}`}
+            size="24px"
+            disableHover
+            />
+            &nbsp;
+            {theme.name}
+          </StyledMenuItem>
+          ))}
+        </StyledSelect>
+        </FormControl>
+      </FormGroup>
 
+      <FormGroup>
+        <FormControl>
+        <FormLabel>Configuración de Emojis</FormLabel>
+        <StyledSelect
+          value={emojisStyle}
+          onChange={handleEmojiStyleChange}
+          translate="no"
+          IconComponent={ExpandMoreRounded}
+        >
+          {!isOnline && (
+          <MenuItem
+            disabled
+            style={{
+            opacity: 0.8,
+            display: "flex",
+            gap: "6px",
+            fontWeight: 500,
+            }}
+          >
+            <WifiOffRounded /> No puedes cambiar el estilo de los emojis <br /> cuando estás desconectado.
+          </MenuItem>
+          )}
+
+          {emojiStyles.map((style) => (
+          <StyledMenuItem
+            key={style.style}
+            value={style.style}
+            translate="no"
+            disabled={
+            !isOnline &&
+            style.style !== EmojiStyle.NATIVE &&
+            style.style !== defaultUser.emojisStyle &&
+            style.style !== lastStyle
+            }
+          >
+            <Emoji size={24} unified="1f60e" emojiStyle={style.style} />
+            &nbsp;
+            {style.style === EmojiStyle.NATIVE && "\u00A0"}
+            {style.label}
+          </StyledMenuItem>
+          ))}
+        </StyledSelect>
+        <CustomTooltip title="El selector de emojis solo mostrará los emojis usados frecuentemente">
+          <FormGroup>
+          <StyledFormLabel
+            sx={{ opacity: userSettings.simpleEmojiPicker ? 1 : 0.8 }}
+            control={
+            <Switch
+              checked={userSettings.simpleEmojiPicker}
+              onChange={handleSettingChange("simpleEmojiPicker")}
+            />
+            }
+            label="Selector de Emojis Simple"
+          />
+          </FormGroup>
+        </CustomTooltip>
+        </FormControl>
+        <CustomTooltip title="Esto eliminará los datos sobre los emojis usados frecuentemente">
+        <Button
+          color="error"
+          variant="outlined"
+          sx={{ my: "12px", p: "12px", borderRadius: "18px" }}
+          onClick={() => {
+          localStorage.removeItem("epr_suggested");
+          showToast("Datos de emojis eliminados.");
+          }}
+        >
+          <DeleteRounded /> &nbsp; Borrar Datos de Emojis
+        </Button>
+        </CustomTooltip>
+      </FormGroup>
+      <FormGroup>
+        <FormLabel>Configuraciones de la App</FormLabel>
+        <StyledFormLabel
+        sx={{ opacity: userSettings.enableCategories ? 1 : 0.8 }}
+        control={
+          <Switch
+          checked={userSettings.enableCategories}
+          onChange={handleSettingChange("enableCategories")}
+          />
+        }
+        label="Habilitar Categorías"
+        />
+      </FormGroup>
+      <FormGroup>
+        <StyledFormLabel
+        sx={{ opacity: userSettings.enableGlow ? 1 : 0.8 }}
+        control={
+          <Switch
+          checked={userSettings.enableGlow}
+          onChange={handleSettingChange("enableGlow")}
+          />
+        }
+        label="Habilitar Efecto de Resplandor"
+        />
+      </FormGroup>
+      <FormGroup>
+        <StyledFormLabel
+        sx={{ opacity: userSettings.enableReadAloud ? 1 : 0.8 }}
+        control={
+          <Switch
+          checked={"speechSynthesis" in window && userSettings.enableReadAloud ? true : false}
+          onChange={handleSettingChange("enableReadAloud")}
+          disabled={"speechSynthesis" in window ? false : true}
+          />
+        }
+        label="Habilitar Lectura en Voz Alta"
+        />
+      </FormGroup>
+
+      {"clearAppBadge" in navigator &&
+        window.matchMedia("(display-mode: standalone)").matches && (
+        <Tooltip
+          title={
+          "setAppBadge" in navigator
+            ? "Esto mostrará el número de tareas no realizadas en el ícono de la app si PWA está instalada."
+            : "App Badge no es compatible"
+          }
+        >
+          <FormGroup>
+          <StyledFormLabel
+            sx={{ opacity: userSettings.appBadge ? 1 : 0.8 }}
+            control={
+            <Switch
+              checked={"setAppBadge" in navigator && userSettings.appBadge ? true : false}
+              onChange={handleSettingChange("appBadge")}
+              disabled={"setAppBadge" in navigator ? false : true}
+            />
+            }
+            label="Habilitar App Badge"
+          />
+          </FormGroup>
+        </Tooltip>
+        )}
+      <FormGroup>
+        <StyledFormLabel
+        sx={{ opacity: userSettings.doneToBottom ? 1 : 0.8 }}
+        control={
+          <Switch
+          checked={userSettings.doneToBottom}
+          onChange={handleSettingChange("doneToBottom")}
+          />
+        }
+        label="Mover Tareas Realizadas al Fondo"
+        />
+      </FormGroup>
+
+      {settings.enableReadAloud && (
         <FormGroup>
-          <FormControl>
-            <FormLabel>Emoji Settings</FormLabel>
-            <StyledSelect
-              value={emojisStyle}
-              onChange={handleEmojiStyleChange}
+        <FormControl>
+          <FormLabel>Configuración de Voz</FormLabel>
+          <StyledFormLabel
+          sx={{ opacity: showLocalVoices ? 1 : 0.8, maxWidth: "300px" }}
+          control={
+            <Switch
+            checked={showLocalVoices}
+            onChange={() => setShowLocalVoices((prev) => !prev)}
+            />
+          }
+          label={`Solo voces en el idioma local (${
+            getLanguageRegion(navigator.language) || "?"
+          })`}
+          />
+          {filteredVoices.length !== 0 ? (
+          <StyledSelect
+            value={settings.voice}
+            variant="outlined"
+            onChange={handleVoiceChange}
+            translate="no"
+            IconComponent={ExpandMoreRounded}
+            MenuProps={{
+            PaperProps: {
+              style: {
+              maxHeight: 500,
+              padding: "2px 6px",
+              },
+            },
+            }}
+          >
+            {filteredVoices.map((voice) => (
+            <MenuItem
+              key={voice.name}
+              value={voice.name}
               translate="no"
-              IconComponent={ExpandMoreRounded}
-            >
-              {/* Show a disabled menu item when offline, indicating that the style can't be changed */}
-              {!isOnline && (
-                <MenuItem
-                  disabled
-                  style={{
-                    opacity: 0.8,
-                    display: "flex",
-                    gap: "6px",
-                    fontWeight: 500,
-                  }}
-                >
-                  <WifiOffRounded /> You can't change the emoji style <br /> when you are offline.
-                </MenuItem>
-              )}
-
-              {emojiStyles.map((style) => (
-                <StyledMenuItem
-                  key={style.style}
-                  value={style.style}
-                  translate="no"
-                  disabled={
-                    !isOnline &&
-                    style.style !== EmojiStyle.NATIVE &&
-                    style.style !== defaultUser.emojisStyle &&
-                    style.style !== lastStyle
-                  }
-                >
-                  <Emoji size={24} unified="1f60e" emojiStyle={style.style} />
-                  &nbsp;
-                  {/* Space For Native Emoji */}
-                  {style.style === EmojiStyle.NATIVE && "\u00A0"}
-                  {style.label}
-                </StyledMenuItem>
-              ))}
-            </StyledSelect>
-            <CustomTooltip title="Emoji picker will only show frequently used emojis">
-              <FormGroup>
-                <StyledFormLabel
-                  sx={{ opacity: userSettings.simpleEmojiPicker ? 1 : 0.8 }}
-                  control={
-                    <Switch
-                      checked={userSettings.simpleEmojiPicker}
-                      onChange={handleSettingChange("simpleEmojiPicker")}
-                    />
-                  }
-                  label="Simple Emoji Picker"
-                />
-              </FormGroup>
-            </CustomTooltip>
-          </FormControl>
-          <CustomTooltip title="This will delete data about frequently used emojis">
-            <Button
-              color="error"
-              variant="outlined"
-              sx={{ my: "12px", p: "12px", borderRadius: "18px" }}
-              onClick={() => {
-                localStorage.removeItem("epr_suggested");
-                showToast("Deleted emoji data.");
+              sx={{
+              padding: "10px",
+              borderRadius: "8px",
               }}
             >
-              <DeleteRounded /> &nbsp; Clear Emoji Data
-            </Button>
-          </CustomTooltip>
-        </FormGroup>
-        {/* Switch components to control different app settings */}
-        <FormGroup>
-          <FormLabel>App Settings</FormLabel>
-          <StyledFormLabel
-            sx={{ opacity: userSettings.enableCategories ? 1 : 0.8 }}
-            control={
-              <Switch
-                checked={userSettings.enableCategories}
-                onChange={handleSettingChange("enableCategories")}
-              />
-            }
-            label="Enable Categories"
-          />
-        </FormGroup>
-        <FormGroup>
-          <StyledFormLabel
-            sx={{ opacity: userSettings.enableGlow ? 1 : 0.8 }}
-            control={
-              <Switch
-                checked={userSettings.enableGlow}
-                onChange={handleSettingChange("enableGlow")}
-              />
-            }
-            label="Enable Glow Effect"
-          />
-        </FormGroup>
-        <FormGroup>
-          <StyledFormLabel
-            sx={{ opacity: userSettings.enableReadAloud ? 1 : 0.8 }}
-            control={
-              <Switch
-                checked={"speechSynthesis" in window && userSettings.enableReadAloud ? true : false}
-                onChange={handleSettingChange("enableReadAloud")}
-                disabled={"speechSynthesis" in window ? false : true}
-              />
-            }
-            label="Enable Read Aloud"
-          />
-        </FormGroup>
-
-        {"clearAppBadge" in navigator &&
-          window.matchMedia("(display-mode: standalone)").matches && (
-            <Tooltip
-              title={
-                "setAppBadge" in navigator
-                  ? "This will show number of not done tasks in app icon if PWA is installed."
-                  : "App Badge is not supported"
-              }
-            >
-              <FormGroup>
-                <StyledFormLabel
-                  sx={{ opacity: userSettings.appBadge ? 1 : 0.8 }}
-                  control={
-                    <Switch
-                      checked={"setAppBadge" in navigator && userSettings.appBadge ? true : false}
-                      onChange={handleSettingChange("appBadge")}
-                      disabled={"setAppBadge" in navigator ? false : true}
-                    />
-                  }
-                  label="Enable App Badge"
-                />
-              </FormGroup>
-            </Tooltip>
-          )}
-        <FormGroup>
-          <StyledFormLabel
-            sx={{ opacity: userSettings.doneToBottom ? 1 : 0.8 }}
-            control={
-              <Switch
-                checked={userSettings.doneToBottom}
-                onChange={handleSettingChange("doneToBottom")}
-              />
-            }
-            label="Move Done Tasks To Bottom"
-          />
-        </FormGroup>
-
-        {settings.enableReadAloud && (
-          <FormGroup>
-            <FormControl>
-              <FormLabel>Voice Settings</FormLabel>
-              <StyledFormLabel
-                sx={{ opacity: showLocalVoices ? 1 : 0.8, maxWidth: "300px" }}
-                control={
-                  <Switch
-                    checked={showLocalVoices}
-                    onChange={() => setShowLocalVoices((prev) => !prev)}
-                  />
+              {voice.name.startsWith("Google") && <Google />}
+              {voice.name.startsWith("Microsoft") && <Microsoft />} &nbsp;{" "}
+              {voice.name.replace(/^(Google|Microsoft)\s*|\([^()]*\)/gi, "")} &nbsp;
+              {!/Windows NT 10/.test(navigator.userAgent) ? (
+              <Chip
+                sx={{ fontWeight: 500, padding: "4px" }}
+                label={getLanguageRegion(voice.lang || "")}
+                icon={
+                <span style={{ fontSize: "16px" }}>
+                  {getFlagEmoji(voice.lang.split("-")[1] || "")}
+                </span>
                 }
-                label={`Local language voices only (${
-                  getLanguageRegion(navigator.language) || "?"
-                })`}
               />
-              {filteredVoices.length !== 0 ? (
-                <StyledSelect
-                  value={settings.voice}
-                  variant="outlined"
-                  onChange={handleVoiceChange}
-                  translate="no"
-                  IconComponent={ExpandMoreRounded}
-                  MenuProps={{
-                    PaperProps: {
-                      style: {
-                        maxHeight: 500,
-                        padding: "2px 6px",
-                      },
-                    },
-                  }}
-                >
-                  {filteredVoices.map((voice) => (
-                    <MenuItem
-                      key={voice.name}
-                      value={voice.name}
-                      translate="no"
-                      sx={{
-                        padding: "10px",
-                        borderRadius: "8px",
-                      }}
-                    >
-                      {voice.name.startsWith("Google") && <Google />}
-                      {voice.name.startsWith("Microsoft") && <Microsoft />} &nbsp;{" "}
-                      {/* Remove Google or Microsoft at the beginning and anything within parentheses */}
-                      {voice.name.replace(/^(Google|Microsoft)\s*|\([^()]*\)/gi, "")} &nbsp;
-                      {/* windows does not display flag emotes correctly */}
-                      {!/Windows NT 10/.test(navigator.userAgent) ? (
-                        <Chip
-                          sx={{ fontWeight: 500, padding: "4px" }}
-                          label={getLanguageRegion(voice.lang || "")}
-                          icon={
-                            <span style={{ fontSize: "16px" }}>
-                              {getFlagEmoji(voice.lang.split("-")[1] || "")}
-                            </span>
-                          }
-                        />
-                      ) : (
-                        <span style={{ fontWeight: 500 }}>
-                          {getLanguageRegion(voice.lang || "")}
-                        </span>
-                      )}
-                      {voice.default && systemInfo.os !== "iOS" && systemInfo.os !== "macOS" && (
-                        <span style={{ fontWeight: 600 }}>&nbsp;Default</span>
-                      )}
-                    </MenuItem>
-                  ))}
-                </StyledSelect>
               ) : (
-                <NoVoiceStyles>
-                  There are no voice styles available.
-                  <Tooltip title="Refetch voices">
-                    <IconButton
-                      size="large"
-                      onClick={() => {
-                        setAvailableVoices(getAvailableVoices() ?? []);
-                      }}
-                    >
-                      <CachedRounded fontSize="large" />
-                    </IconButton>
-                  </Tooltip>
-                </NoVoiceStyles>
+              <span style={{ fontWeight: 500 }}>
+                {getLanguageRegion(voice.lang || "")}
+              </span>
               )}
-            </FormControl>
+              {voice.default && systemInfo.os !== "iOS" && systemInfo.os !== "macOS" && (
+              <span style={{ fontWeight: 600 }}>&nbsp;Predeterminado</span>
+              )}
+            </MenuItem>
+            ))}
+          </StyledSelect>
+          ) : (
+          <NoVoiceStyles>
+            No hay estilos de voz disponibles.
+            <Tooltip title="Recargar voces">
+            <IconButton
+              size="large"
+              onClick={() => {
+              setAvailableVoices(getAvailableVoices() ?? []);
+              }}
+            >
+              <CachedRounded fontSize="large" />
+            </IconButton>
+            </Tooltip>
+          </NoVoiceStyles>
+          )}
+        </FormControl>
 
-            <Box>
-              <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <VolumeSlider spacing={2} direction="row" alignItems="center">
-                  <Tooltip title={voiceVolume ? "Mute" : "Unmute"} onClick={handleMuteClick}>
-                    <IconButton>
-                      {voiceVolume === 0 ? (
-                        <VolumeOff />
-                      ) : voiceVolume <= 0.4 ? (
-                        <VolumeDown />
-                      ) : (
-                        <VolumeUp />
-                      )}
-                    </IconButton>
-                  </Tooltip>
-                  <Slider
-                    sx={{
-                      width: "100%",
-                    }}
-                    value={voiceVolume}
-                    onChange={(_event, value) => setVoiceVolume(value as number)}
-                    onChangeCommitted={handleVoiceVolCommitChange}
-                    min={0}
-                    max={1}
-                    step={0.01}
-                    aria-label="Volume Slider"
-                    valueLabelFormat={() => {
-                      const vol = Math.floor(voiceVolume * 100);
-                      return vol === 0 ? "Muted" : vol + "%";
-                    }}
-                    valueLabelDisplay="auto"
-                  />
-                </VolumeSlider>
-              </div>
-            </Box>
-          </FormGroup>
-        )}
-        {storageUsage !== undefined && storageUsage !== 0 && (
-          <FormGroup>
-            <FormLabel>Storage Usage</FormLabel>
-            <div>{storageUsage ? `${(storageUsage / 1024 / 1024).toFixed(2)} MB` : "0 MB"}</div>
-          </FormGroup>
-        )}
+        <Box>
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <VolumeSlider spacing={2} direction="row" alignItems="center">
+            <Tooltip title={voiceVolume ? "Silenciar" : "Activar sonido"} onClick={handleMuteClick}>
+            <IconButton>
+              {voiceVolume === 0 ? (
+              <VolumeOff />
+              ) : voiceVolume <= 0.4 ? (
+              <VolumeDown />
+              ) : (
+              <VolumeUp />
+              )}
+            </IconButton>
+            </Tooltip>
+            <Slider
+            sx={{
+              width: "100%",
+            }}
+            value={voiceVolume}
+            onChange={(_event, value) => setVoiceVolume(value as number)}
+            onChangeCommitted={handleVoiceVolCommitChange}
+            min={0}
+            max={1}
+            step={0.01}
+            aria-label="Control de Volumen"
+            valueLabelFormat={() => {
+              const vol = Math.floor(voiceVolume * 100);
+              return vol === 0 ? "Silenciado" : vol + "%";
+            }}
+            valueLabelDisplay="auto"
+            />
+          </VolumeSlider>
+          </div>
+        </Box>
+        </FormGroup>
+      )}
+      {storageUsage !== undefined && storageUsage !== 0 && (
+        <FormGroup>
+        <FormLabel>Uso de Almacenamiento</FormLabel>
+        <div>{storageUsage ? `${(storageUsage / 1024 / 1024).toFixed(2)} MB` : "0 MB"}</div>
+        </FormGroup>
+      )}
       </Container>
       <DialogActions>
-        <DialogBtn onClick={onClose}>Close</DialogBtn>
+      <DialogBtn onClick={onClose}>Cerrar</DialogBtn>
       </DialogActions>
     </Dialog>
   );

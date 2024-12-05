@@ -29,18 +29,18 @@ export const fetchGitHubInfo = async (): Promise<GitHubInfoResponse> => {
     } else {
       // Check if rate limit exceeded
       if (repoResponse.status === 403 && branchResponse.status === 403) {
-        showToast("Github API rate limit exceeded temporarily for your IP address.", {
+        showToast("Límite de velocidad de la API de Github excedido temporalmente para su dirección IP.", {
           type: "error",
           disableVibrate: true,
         });
       } else {
-        throw new Error("Failed to fetch repository or branch information");
+        throw new Error("No se pudo obtener información del repositorio o la rama");
       }
     }
   } catch (error) {
     console.error(error);
     if (navigator.onLine) {
-      showToast("Failed to fetch Github API.", { type: "error", disableVibrate: true });
+      showToast("No se pudo obtener la API de Github.", { type: "error", disableVibrate: true });
     }
   }
   // Return a default value in case of error

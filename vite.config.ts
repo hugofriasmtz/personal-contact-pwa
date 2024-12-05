@@ -22,7 +22,10 @@ export default defineConfig({
       },
       registerType: "prompt",
       workbox: {
-        // Use runtime caching for dynamic imports
+        globDirectory: "dev-dist",
+        globPatterns: ["**/*.{js,wasm,css,html}"],
+        globIgnores: ["/node_modules/","sw.js","workbox-*.js"],
+        // Usar almacenamiento en caché en tiempo de ejecución para importaciones dinámicas
         runtimeCaching: [
           {
             urlPattern: ({ request }) =>

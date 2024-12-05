@@ -56,9 +56,9 @@ function App() {
           userObject[key] = defaultValue;
           showToast(
             <div>
-              Added new property to user object{" "}
+              Añadida nueva propiedad al objeto usuario{" "}
               <i translate="no">
-                {key.toString()}: {userObject[key].toString()}
+              {key.toString()}: {userObject[key].toString()}
               </i>
             </div>,
             {
@@ -88,7 +88,7 @@ function App() {
         try {
           await navigator.setAppBadge(count);
         } catch (error) {
-          console.error("Failed to set app badge:", error);
+            console.error("No se pudo establecer el icono de la aplicación:", error);
         }
       }
     };
@@ -98,7 +98,7 @@ function App() {
         try {
           await navigator.clearAppBadge();
         } catch (error) {
-          console.error("Failed to clear app badge:", error);
+            console.error("No se pudo borrar la insignia de la aplicación:", error);
         }
       }
     };

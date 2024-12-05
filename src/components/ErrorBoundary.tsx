@@ -102,7 +102,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
       return (
         <Container>
           <ErrorHeader>
-            <span>Oops! An error occurred.&nbsp;</span>
+            <span>¡Vaya! Ocurrió un error.&nbsp;</span>
             <span>
               <Emoji size={38} unified="1f644" />
             </span>
@@ -110,23 +110,23 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
           <ErrorIconContainer>
             <TaskIcon scale={0.6} variant="error" />
           </ErrorIconContainer>
-          <h2>
-            To fix it, try clearing your local files (cookies and cache) and then refresh the page.
-            If the problem persists, please report the issue via{" "}
-            <StyledLink translate="no" href="https://github.com/maciekt07/TodoApp/issues">
+            <h2>
+            Para solucionarlo, intenta limpiar tus archivos locales (cookies y caché) y luego refresca la página.
+            Si el problema persiste, por favor reporta el problema a través de{" "}
+            <StyledLink translate="no" href="https://github.com/hugofriasmtz/personal-contact-pwa">
               Github Issues
             </StyledLink>
             .
-          </h2>
-          <Alert severity="error" variant="filled" sx={{ mt: "-8px", mb: "18px" }}>
-            By cleaning app data, you will lose all of your tasks.
-          </Alert>
+            </h2>
+            <Alert severity="error" variant="filled" sx={{ mt: "-8px", mb: "18px" }}>
+            Al limpiar los datos de la aplicación, perderás todos tus Contactos.
+            </Alert>
           <div style={{ display: "flex", gap: "12px" }}>
             <StyledButton color="warning" onClick={() => location.reload()}>
-              <RefreshRounded /> &nbsp; Refresh Page
+              <RefreshRounded /> &nbsp; Refrescar Página
             </StyledButton>
             <StyledButton color="error" onClick={this.handleOpenDialog}>
-              <DeleteForeverRounded /> &nbsp; Auto Clear
+              <DeleteForeverRounded /> &nbsp; Auto Limpiar
             </StyledButton>
           </div>
           <h3>
@@ -140,13 +140,13 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
 
           <ErrorAccordion disableGutters>
             <AccordionSummary expandIcon={<ErrorExpandIcon />}>
-              <Typography
+                <Typography
                 fontWeight={700}
                 fontSize={18}
                 sx={{ display: "flex", alignItems: "center", gap: "6px" }}
-              >
-                <DescriptionRounded /> Error stack
-              </Typography>
+                >
+                <DescriptionRounded /> Pila de errores
+                </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <div translate="no" style={{ opacity: 0.8, fontSize: "12px" }}>
@@ -163,11 +163,11 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
               variant="outlined"
               sx={{ ml: "6px", my: "18px", p: "12px 20px", borderRadius: "14px" }}
               onClick={() => {
-                exportTasksToJson(tasks);
-                showToast(`Exported all tasks (${tasks.length})`);
+              exportTasksToJson(tasks);
+              showToast(`Exportó todas las tareas (${tasks.length})`);
               }}
             >
-              <FileDownload /> &nbsp; Export Tasks To JSON
+              <FileDownload /> &nbsp; Exportar Contactos a JSON
             </Button>
             <br />
             <code translate="no">{JSON.stringify(user, null, 4)}</code>
@@ -180,12 +180,12 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
               onClose={this.handleCloseDialog}
             />
             <DialogContent>
-              Are you sure you want to clear all data? You will loose all of your tasks.
+              ¿Estás seguro de que deseas borrar todos los datos? Perderás todos tus Contactos.
             </DialogContent>
             <DialogActions>
-              <DialogBtn onClick={this.handleCloseDialog}>Cancel</DialogBtn>
+              <DialogBtn onClick={this.handleCloseDialog}>Cancelar</DialogBtn>
               <DialogBtn onClick={this.handleConfirmClearData} color="error">
-                Confirm
+                Confirmar
               </DialogBtn>
             </DialogActions>
           </Dialog>

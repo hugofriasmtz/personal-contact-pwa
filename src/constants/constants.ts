@@ -2,6 +2,7 @@
  * Maximum length allowed for task names.
  */
 export const TASK_NAME_MAX_LENGTH = 40;
+export const TASK_PHONE_MAX_LENGTH = 10;
 
 /**
  * Maximum length allowed for task descriptions.

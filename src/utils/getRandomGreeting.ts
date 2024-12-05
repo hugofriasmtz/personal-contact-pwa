@@ -4,35 +4,35 @@ export const maxRecentGreetings = 8; // Number of recent greetings to track
 const hoursLeft = 24 - new Date().getHours();
 
 const greetingsText: string[] = [
-  "Let's make today count! **1f680**",
-  "Get things done and conquer the day!",
-  "Embrace the power of productivity!",
-  "Set your goals, crush them, repeat.",
-  "Today is a new opportunity to be productive!",
-  "Make every moment count.",
-  "Stay organized, stay ahead.",
-  "Take charge of your day!",
-  "One task at a time, you've got this!",
-  "Productivity is the key to success. **1f511**",
-  "Let's turn plans into accomplishments!",
-  "Start small, achieve big.",
-  "Be efficient, be productive.",
-  "Harness the power of productivity!",
-  "Get ready to make things happen!",
-  "It's time to check off those tasks! **2705**",
-  "Start your day with a plan! **1f5d3-fe0f**",
-  "Stay focused, stay productive.",
-  "Unlock your productivity potential. **1f513**",
-  "Turn your to-do list into a to-done list! **1f4dd**",
-  `Have a wonderful ${new Date().toLocaleDateString("en", {
+  "¡Hagamos que hoy cuente! **1f680**",
+  "¡Organiza tus contactos y conquista el día!",
+  "¡Abraza el poder de la organización!",
+  "Establece tus metas, consíguelas, repite.",
+  "¡Hoy es una nueva oportunidad para ser organizado!",
+  "Haz que cada momento cuente.",
+  "Mantente organizado, mantente adelante.",
+  "¡Toma el control de tu día!",
+  "Un contacto a la vez, ¡tú puedes!",
+  "La organización es la clave del éxito. **1f511**",
+  "¡Convirtamos los planes en logros!",
+  "Empieza pequeño, logra en grande.",
+  "Sé eficiente, sé organizado.",
+  "¡Aprovecha el poder de la organización!",
+  "¡Prepárate para hacer que las cosas sucedan!",
+  "¡Es hora de revisar esos contactos! **2705**",
+  "¡Empieza tu día con un plan! **1f5d3-fe0f**",
+  "Mantente enfocado, mantente organizado.",
+  "Desbloquea tu potencial de organización. **1f513**",
+  "¡Convierte tu lista de contactos en una lista de hechos! **1f4dd**",
+  `¡Ten un maravilloso ${new Date().toLocaleDateString("es", {
     weekday: "long",
   })}!`,
-  `Happy ${new Date().toLocaleDateString("en", {
+  `¡Feliz ${new Date().toLocaleDateString("es", {
     month: "long",
-  })}! A great month for productivity!`,
+  })}! ¡Un gran mes para la organización!`,
   hoursLeft > 4
-    ? `${hoursLeft} hours left in the day. Use them wisely!`
-    : `Only ${hoursLeft} hours left in the day`,
+    ? `${hoursLeft} horas restantes en el día. ¡Úsalas sabiamente!`
+    : `Solo ${hoursLeft} horas restantes en el día`,
 ];
 
 /**

@@ -17,16 +17,16 @@ const TaskDetails = () => {
   const task = tasks.find((task) => task.id.toString().replace(".", "") === formattedId);
 
   useEffect(() => {
-    document.title = `Todo App - ${task?.name || "Task Details"}`;
+    document.title = `Contacto - ${task?.name || "Contac Details"}`;
   }, [task?.name]);
 
   if (!task) {
     return (
       <NotFound
         message={
-          <div>
-            Task with id <PathName>{formattedId}</PathName> was not found.
-          </div>
+            <div>
+            Contacto con id <PathName>{formattedId}</PathName> no fue encontrada.
+            </div>
         }
       />
     );
@@ -39,29 +39,31 @@ const TaskDetails = () => {
 
   return (
     <>
-      <TopBar title="Task Details" />
+      <TopBar title="Información del Contacto" />
       <Container>
         <TaskName>
-          Task: <span translate="no">{task.name}</span>
+          Nombre:{" "}
+          <span translate="no">
+            {task.name} {task.lastName}
+          </span>
         </TaskName>
         <TaskTable>
           <tbody>
             <TableRow>
-              <TableHeader>Emoji:</TableHeader>
-              <TableData>
-                {task.emoji ? (
-                  <>
-                    <Emoji unified={task?.emoji || ""} size={32} emojiStyle={emojisStyle} /> (
-                    {task.emoji})
-                  </>
-                ) : (
-                  <i>none</i>
-                )}
-              </TableData>
+              <TableHeader>Nombres:</TableHeader>
+              <TableData translate="no">{task?.name}</TableData>
             </TableRow>
             <TableRow>
-              <TableHeader>ID:</TableHeader>
-              <TableData>{task?.id}</TableData>
+              <TableHeader>Apellidos:</TableHeader>
+              <TableData translate="no">{task?.lastName}</TableData>
+            </TableRow>
+            <TableRow>
+              <TableHeader>Correo:</TableHeader>
+              <TableData translate="no">{task?.email}</TableData>
+            </TableRow>
+            <TableRow>
+              <TableHeader>Teléfono:</TableHeader>
+              <TableData translate="no">{task?.phoneNumber}</TableData>
             </TableRow>
             <TableRow>
               <TableHeader>Description:</TableHeader>
@@ -75,33 +77,15 @@ const TaskDetails = () => {
               </TableData>
             </TableRow>
             <TableRow>
-              <TableHeader>Created:</TableHeader>
+              <TableHeader>Fecha de Registro:</TableHeader>
               <TableData>{dateFormatter.format(new Date(task.date))}</TableData>
             </TableRow>
             {task?.lastSave && (
               <TableRow>
-                <TableHeader>Last edited:</TableHeader>
+                <TableHeader>Última edición:</TableHeader>
                 <TableData>{dateFormatter.format(new Date(task.lastSave))}</TableData>
               </TableRow>
             )}
-            {task?.deadline && (
-              <TableRow>
-                <TableHeader>Task deadline:</TableHeader>
-                <TableData>{dateFormatter.format(new Date(task.deadline))}</TableData>
-              </TableRow>
-            )}
-            <TableRow>
-              <TableHeader>Done:</TableHeader>
-              <TableData>
-                {task?.done ? <Done /> : <Clear />} {task?.done.toString()}
-              </TableData>
-            </TableRow>
-            <TableRow>
-              <TableHeader>Pinned:</TableHeader>
-              <TableData>
-                {task?.pinned ? <Done /> : <Clear />} {task?.pinned.toString()}
-              </TableData>
-            </TableRow>
             {task?.sharedBy && (
               <TableRow>
                 <TableHeader>Shared by: </TableHeader>

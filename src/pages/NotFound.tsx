@@ -14,7 +14,7 @@ const NotFound: React.FC<NotFoundProps> = ({ message }) => {
   const n = useNavigate();
 
   useEffect(() => {
-    document.title = "Todo App - Page Not Found";
+    document.title = "Contacto - Pagina no encontrada";
   }, []);
 
   return (
@@ -35,7 +35,7 @@ const NotFound: React.FC<NotFoundProps> = ({ message }) => {
         )}
       </Description>
       <BackButton variant="outlined" onClick={() => n("/")}>
-        <ArrowBackIosNew /> &nbsp; Go back to tasks
+        <ArrowBackIosNew /> &nbsp; Volver a tus contactos.
       </BackButton>
     </Container>
   );

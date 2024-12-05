@@ -48,7 +48,7 @@ const Home = () => {
 
   useEffect(() => {
     setRandomGreeting(getRandomGreeting());
-    document.title = "Todo App";
+    document.title = "Contactos - Home";
 
     const interval = setInterval(() => {
       setRandomGreeting(getRandomGreeting());
@@ -110,33 +110,33 @@ const Home = () => {
     const currentHour = currentTime.getHours();
     let greeting: string;
     if (currentHour < 12 && currentHour >= 5) {
-      greeting = "Good morning";
+      greeting = "Buenos días";
     } else if (currentHour < 18 && currentHour > 12) {
-      greeting = "Good afternoon";
+      greeting = "Buenas tardes";
     } else {
-      greeting = "Good evening";
+      greeting = "Buenas noches";
     }
 
     return greeting;
   };
 
   // Returns a task completion message based on the completion percentage.
-  const getTaskCompletionText = (completionPercentage: number): string => {
-    switch (true) {
-      case completionPercentage === 0:
-        return "No tasks completed yet. Keep going!";
-      case completionPercentage === 100:
-        return "Congratulations! All tasks completed!";
-      case completionPercentage >= 75:
-        return "Almost there!";
-      case completionPercentage >= 50:
-        return "You're halfway there! Keep it up!";
-      case completionPercentage >= 25:
-        return "You're making good progress.";
-      default:
-        return "You're just getting started.";
-    }
-  };
+  // const getTaskCompletionText = (completionPercentage: number): string => {
+  //   switch (true) {
+  //     case completionPercentage === 0:
+  //       return "No tasks completed yet. Keep going!";
+  //     case completionPercentage === 100:
+  //       return "Congratulations! All tasks completed!";
+  //     case completionPercentage >= 75:
+  //       return "Almost there!";
+  //     case completionPercentage >= 50:
+  //       return "You're halfway there! Keep it up!";
+  //     case completionPercentage >= 25:
+  //       return "You're making good progress.";
+  //     default:
+  //       return "You're just getting started.";
+  //   }
+  // };
 
   return (
     <>
@@ -151,12 +151,12 @@ const Home = () => {
       <GreetingText key={greetingKey}>{renderGreetingWithEmojis(randomGreeting)}</GreetingText>
       {!isOnline && (
         <Offline>
-          <WifiOff /> You're offline but you can use the app!
+          <WifiOff /> Estás desconectado pero puedes usar la aplicación!
         </Offline>
       )}
       {tasks.length > 0 && (
         <TasksCountContainer>
-          <TasksCount glow={settings.enableGlow}>
+          {/* <TasksCount glow={settings.enableGlow}>
             <Box sx={{ position: "relative", display: "inline-flex" }}>
               <StyledProgress
                 variant="determinate"
@@ -202,21 +202,21 @@ const Home = () => {
                 </span>
               )}
             </TaskCountTextContainer>
-          </TasksCount>
+          </TasksCount> */}
         </TasksCountContainer>
       )}
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div>Cargando...</div>}>
         <TaskProvider>
           <TasksList />
         </TaskProvider>
       </Suspense>
       {!isMobile && (
-        <Tooltip title={tasks.length > 0 ? "Add New Task" : "Add Task"} placement="left">
+        <Tooltip title={tasks.length > 0 ? "Contacto Nuevo" : "Agregar Contacto"} placement="left">
           <AddButton
             animate={tasks.length === 0}
             glow={settings.enableGlow}
             onClick={() => n("add")}
-            aria-label="Add Task"
+            aria-label="Agregar Contacto"
           >
             <AddRounded style={{ fontSize: "44px" }} />
           </AddButton>

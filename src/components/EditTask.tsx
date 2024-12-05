@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { ColorPicker, CustomDialogTitle, CustomEmojiPicker } from ".";
-import { DESCRIPTION_MAX_LENGTH, TASK_NAME_MAX_LENGTH } from "../constants";
+import { DESCRIPTION_MAX_LENGTH, TASK_NAME_MAX_LENGTH, TASK_PHONE_MAX_LENGTH } from "../constants";
 import { UserContext } from "../contexts/UserContext";
 import { DialogBtn } from "../styles";
 import { Category, Task } from "../types/user";
@@ -99,7 +99,7 @@ export const EditTask = ({ open, task, onClose, onSave }: EditTaskProps) => {
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (JSON.stringify(editedTask) !== JSON.stringify(task) && open) {
-        const message = "You have unsaved changes. Are you sure you want to leave?";
+        const message = "Tienes cambios sin guardar. ¿Estás seguro de que quieres salir?";
         e.returnValue = message;
         return message;
       }
@@ -125,13 +125,13 @@ export const EditTask = ({ open, task, onClose, onSave }: EditTaskProps) => {
           maxWidth: "600px",
         },
       }}
-    >
+        >
       <CustomDialogTitle
-        title="Edit Task"
+        title="Editar Contacto"
         subTitle={
           editedTask?.lastSave
-            ? `Last Edited: ${new Date(editedTask.lastSave).toLocaleDateString()} • ${new Date(editedTask.lastSave).toLocaleTimeString()}`
-            : "Edit the details of the task."
+        ? `Última Edición: ${new Date(editedTask.lastSave).toLocaleDateString()} • ${new Date(editedTask.lastSave).toLocaleTimeString()}`
+        : "Edita los detalles del Contacto."
         }
         icon={<EditCalendarRounded />}
         onClose={onClose}
@@ -145,7 +145,7 @@ export const EditTask = ({ open, task, onClose, onSave }: EditTaskProps) => {
           type="task"
         />
         <StyledInput
-          label="Name"
+          label="Nombres"
           name="name"
           autoComplete="off"
           value={editedTask?.name || ""}
@@ -162,7 +162,58 @@ export const EditTask = ({ open, task, onClose, onSave }: EditTaskProps) => {
           }
         />
         <StyledInput
-          label="Description"
+          label="Apellidos"
+          name="lastName"
+          autoComplete="off"
+          value={editedTask?.lastName || ""}
+          onChange={handleInputChange}
+          error={nameError || editedTask?.lastName === ""}
+          helperText={
+            editedTask?.lastName
+              ? editedTask?.lastName.length === 0
+                ? "Last Name is required"
+                : editedTask?.lastName.length > TASK_NAME_MAX_LENGTH
+                  ? `Last Name is too long (maximum ${TASK_NAME_MAX_LENGTH} characters)`
+                  : `${editedTask?.lastName?.length}/${TASK_NAME_MAX_LENGTH}`
+              : "Last Name is required"
+          }
+        />
+        <StyledInput
+          label="Email"
+          name="email"
+          autoComplete="off"
+          value={editedTask?.email || ""}
+          onChange={handleInputChange}
+          error={nameError || editedTask?.email === ""}
+          helperText={
+            editedTask?.email
+              ? editedTask?.email.length === 0
+                ? "Email is required"
+                : editedTask?.email.length > TASK_NAME_MAX_LENGTH
+                  ? `Email is too long (maximum ${TASK_NAME_MAX_LENGTH} characters)`
+                  : `${editedTask?.email?.length}/${TASK_NAME_MAX_LENGTH}`
+              : "Email is required"
+          }
+        />
+        <StyledInput
+          label="Teléfono"
+          name="phoneNumber"
+          autoComplete="off"
+          value={editedTask?.phoneNumber || ""}
+          onChange={handleInputChange}
+          error={nameError || editedTask?.phoneNumber === ""}
+          helperText={
+            editedTask?.phoneNumber
+              ? editedTask?.phoneNumber.length === 0
+                ? "Phone Number is required"
+                : editedTask?.phoneNumber.length > TASK_PHONE_MAX_LENGTH
+                  ? `Phone Number is too long (maximum ${TASK_PHONE_MAX_LENGTH} characters)`
+                  : `${editedTask?.phoneNumber?.length}/${TASK_PHONE_MAX_LENGTH}`
+              : "Phone Number is required"
+          }
+        />
+        <StyledInput
+          label="Descripción"
           name="description"
           autoComplete="off"
           value={editedTask?.description || ""}
@@ -178,39 +229,6 @@ export const EditTask = ({ open, task, onClose, onSave }: EditTaskProps) => {
                 ? `Description is too long (maximum ${DESCRIPTION_MAX_LENGTH} characters)`
                 : `${editedTask?.description?.length}/${DESCRIPTION_MAX_LENGTH}`
           }
-        />
-        <StyledInput
-          label="Deadline date"
-          name="deadline"
-          type="datetime-local"
-          value={editedTask?.deadline || ""} // FIXME: deadline is not being displayed correctly
-          onChange={handleInputChange}
-          InputLabelProps={{ shrink: true }}
-          sx={{
-            colorScheme: theme.darkmode ? "dark" : "light",
-            " & .MuiInputBase-root": {
-              transition: ".3s all",
-            },
-          }}
-          InputProps={{
-            startAdornment: editedTask?.deadline ? (
-              <InputAdornment position="start">
-                <Tooltip title="Clear">
-                  <IconButton
-                    color="error"
-                    onClick={() => {
-                      setEditedTask((prevTask) => ({
-                        ...(prevTask as Task),
-                        deadline: undefined,
-                      }));
-                    }}
-                  >
-                    <CancelRounded />
-                  </IconButton>
-                </Tooltip>
-              </InputAdornment>
-            ) : undefined,
-          }}
         />
         {settings.enableCategories !== undefined && settings.enableCategories && (
           <CategorySelect
@@ -241,7 +259,7 @@ export const EditTask = ({ open, task, onClose, onSave }: EditTaskProps) => {
         </div>
       </DialogContent>
       <DialogActions>
-        <DialogBtn onClick={handleCancel}>Cancel</DialogBtn>
+        <DialogBtn onClick={handleCancel}>Cancelar</DialogBtn>
         <DialogBtn
           onClick={handleSave}
           color="primary"
@@ -253,7 +271,7 @@ export const EditTask = ({ open, task, onClose, onSave }: EditTaskProps) => {
             JSON.stringify(editedTask) === JSON.stringify(task)
           }
         >
-          <SaveRounded /> &nbsp; Save
+          <SaveRounded /> &nbsp; Guardar
         </DialogBtn>
       </DialogActions>
     </Dialog>

@@ -56,7 +56,7 @@ export const CategorySelect: React.FC<CategorySelectProps> = ({
   const handleCategoryChange = (event: SelectChangeEvent<unknown>): void => {
     const selectedCategoryIds = event.target.value as UUID[];
     if (selectedCategoryIds.length > MAX_CATEGORIES_IN_TASK) {
-      showToast(`You cannot add more than ${MAX_CATEGORIES_IN_TASK} categories`, {
+      showToast(`No puedes agregar más de ${MAX_CATEGORIES_IN_TASK} categorías`, {
         type: "error",
         position: "top-center",
       });
@@ -77,7 +77,7 @@ export const CategorySelect: React.FC<CategorySelectProps> = ({
           fontWeight: 500,
         }}
       >
-        Category
+        Categoria
       </FormLabel>
 
       <StyledSelect
@@ -130,7 +130,7 @@ export const CategorySelect: React.FC<CategorySelectProps> = ({
         <HeaderMenuItem disabled>
           <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
             <b>
-              Select Categories{" "}
+              Selecciona una Categoria{" "}
               <span
                 style={{
                   transition: ".3s color",
@@ -142,7 +142,7 @@ export const CategorySelect: React.FC<CategorySelectProps> = ({
             </b>
             {selectedCats.length > 0 && (
               <SelectedNames>
-                Selected:{" "}
+                Seleccionaste:{" "}
                 {selectedCats.length > 0 &&
                   new Intl.ListFormat("en", {
                     style: "long",
@@ -173,7 +173,7 @@ export const CategorySelect: React.FC<CategorySelectProps> = ({
           ))
         ) : (
           <NoCategories disableTouchRipple>
-            <p>You don't have any categories</p>
+            <p>No tienes ninguna categoría</p>
             <Button
               fullWidth
               variant="outlined"
@@ -181,7 +181,7 @@ export const CategorySelect: React.FC<CategorySelectProps> = ({
                 n("/categories");
               }}
             >
-              <AddRounded /> &nbsp; Add Category
+              <AddRounded /> &nbsp; Agregar Categoria
             </Button>
           </NoCategories>
         )}
@@ -191,7 +191,7 @@ export const CategorySelect: React.FC<CategorySelectProps> = ({
             <Divider sx={{ mb: "12px", mt: "16px" }} />
             <Link to="/categories">
               <Button fullWidth variant="outlined" sx={{ mb: "8px", mt: "2px" }}>
-                <EditRounded /> &nbsp; Modify Categories
+                <EditRounded /> &nbsp; Modificar Categoria
               </Button>
             </Link>
           </div>

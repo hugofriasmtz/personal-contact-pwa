@@ -55,12 +55,12 @@ const Categories = () => {
   const n = useNavigate();
 
   useEffect(() => {
-    document.title = "Todo App - Categories";
+    document.title = "Contactos - Categorias";
     if (!user.settings.enableCategories) {
       n("/");
     }
     if (name.length > CATEGORY_NAME_MAX_LENGTH) {
-      setNameError(`Name is too long (maximum ${CATEGORY_NAME_MAX_LENGTH} characters)`);
+      setNameError(`El nombre es demasiado largo (máximo ${CATEGORY_NAME_MAX_LENGTH} caracteres)`);
     }
   }, [n, name.length, user.settings]);
 
@@ -104,7 +104,7 @@ const Categories = () => {
     const newName = event.target.value;
     setName(newName);
     if (newName.length > CATEGORY_NAME_MAX_LENGTH) {
-      setNameError(`Name is too long (maximum ${CATEGORY_NAME_MAX_LENGTH} characters)`);
+      setNameError(`El nombre es demasiado largo (máximo ${CATEGORY_NAME_MAX_LENGTH} caracteres)`);
     } else {
       setNameError("");
     }
@@ -114,7 +114,7 @@ const Categories = () => {
     const newName = event.target.value;
     setEditName(newName);
     if (newName.length > CATEGORY_NAME_MAX_LENGTH) {
-      setEditNameError(`Name is too long (maximum ${CATEGORY_NAME_MAX_LENGTH} characters)`);
+      setEditNameError(`El nombre es demasiado largo (máximo ${CATEGORY_NAME_MAX_LENGTH} caracteres)`);
     } else {
       setEditNameError("");
     }
@@ -134,7 +134,7 @@ const Categories = () => {
 
       showToast(
         <div>
-          Added category - <b translate="no">{newCategory.name}</b>
+          Categoría añadida - <b translate="no">{newCategory.name}</b>
         </div>,
       );
 
@@ -147,7 +147,7 @@ const Categories = () => {
       setColor(theme.primary);
       setEmoji("");
     } else {
-      showToast("Category name is required.", { type: "error" });
+      showToast("El nombre de la categoría es obligatorio.", { type: "error" });
     }
   };
 
@@ -200,7 +200,7 @@ const Categories = () => {
 
       showToast(
         <div>
-          Updated category - <b translate="no">{editName}</b>
+          Categoría actualizada - <b translate="no">{editName}</b>
         </div>,
       );
 
@@ -209,7 +209,7 @@ const Categories = () => {
   };
 
   if (!user.settings.enableCategories) {
-    return <NotFound message="Categories are not enabled." />;
+    return <NotFound message="Las categorías no están habilitadas." />;
   }
 
   return (
@@ -286,10 +286,10 @@ const Categories = () => {
             })}
           </CategoryElementsContainer>
         ) : (
-          <p>You don't have any categories</p>
+          <p>No tienes Ninguna Categoria</p>
         )}
         <AddContainer>
-          <h2>Add New Category</h2>
+          <h2>Agrega una Nueva Categoria</h2>
           <CustomEmojiPicker
             emoji={typeof emoji === "string" ? emoji : undefined}
             setEmoji={setEmoji}
@@ -300,8 +300,8 @@ const Categories = () => {
           <InputThemeProvider>
             <CategoryInput
               required
-              label="Category name"
-              placeholder="Enter category name"
+              label="Categoria"
+              placeholder="Tipo de Categoria"
               value={name}
               onChange={handleNameChange}
               error={nameError !== ""}
@@ -326,7 +326,7 @@ const Categories = () => {
             onClick={handleAddCategory}
             disabled={name.length > CATEGORY_NAME_MAX_LENGTH}
           >
-            Create Category
+            Crear Categoria
           </AddCategoryButton>
         </AddContainer>
         <Dialog
@@ -340,17 +340,17 @@ const Categories = () => {
             },
           }}
         >
-          <DialogTitle>
-            Confirm deletion of{" "}
+            <DialogTitle>
+            Confirmar eliminación de{" "}
             <b>{user.categories.find((cat) => cat.id === selectedCategoryId)?.name}</b>
-          </DialogTitle>
+            </DialogTitle>
 
-          <DialogContent>
-            This will remove the category from your list and associated tasks.
-          </DialogContent>
+            <DialogContent>
+            Esto eliminará la categoría de tu lista y de tus contactos asociadas.
+            </DialogContent>
 
           <DialogActions>
-            <DialogBtn onClick={() => setOpenDeleteDialog(false)}>Cancel</DialogBtn>
+            <DialogBtn onClick={() => setOpenDeleteDialog(false)}>Cancelar</DialogBtn>
             <DialogBtn
               onClick={() => {
                 handleDelete(selectedCategoryId);
@@ -358,7 +358,7 @@ const Categories = () => {
               }}
               color="error"
             >
-              <DeleteRounded /> &nbsp; Delete
+              <DeleteRounded /> &nbsp; Eliminar
             </DialogBtn>
           </DialogActions>
         </Dialog>
@@ -375,8 +375,8 @@ const Categories = () => {
           }}
         >
           <CustomDialogTitle
-            title="Edit Category"
-            subTitle={`Edit the details of the category.`}
+            title="Editar Categoria"
+            subTitle={`Edita detalles de la Categoria.`}
             icon={<Edit />}
             onClose={handleEditDimiss}
           />
@@ -400,8 +400,8 @@ const Categories = () => {
               }}
             >
               <EditNameInput
-                label="Enter category name"
-                placeholder="Enter category name"
+                label="Categoria"
+                placeholder="Nombre de la Categoria"
                 value={editName}
                 error={editNameError !== "" || editName.length === 0}
                 onChange={handleEditNameChange}
@@ -409,7 +409,7 @@ const Categories = () => {
                   editNameError
                     ? editNameError
                     : editName.length === 0
-                      ? "Category name is required"
+                      ? "El nombre de la categoria es requerida"
                       : `${editName.length}/${CATEGORY_NAME_MAX_LENGTH}`
                 }
               />
@@ -424,12 +424,12 @@ const Categories = () => {
             </div>
           </DialogContent>
           <DialogActions>
-            <DialogBtn onClick={handleEditDimiss}>Cancel</DialogBtn>
+            <DialogBtn onClick={handleEditDimiss}>Cancelar</DialogBtn>
             <DialogBtn
               onClick={handleEditCategory}
               disabled={editNameError !== "" || editName.length === 0}
             >
-              <SaveRounded /> &nbsp; Save
+              <SaveRounded /> &nbsp; Guardar
             </DialogBtn>
           </DialogActions>
         </Dialog>

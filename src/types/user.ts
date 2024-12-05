@@ -31,6 +31,9 @@ export interface Task {
   done: boolean;
   pinned: boolean;
   name: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
   description?: string;
   emoji?: string;
   color: string;

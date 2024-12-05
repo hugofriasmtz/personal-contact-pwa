@@ -105,7 +105,7 @@ export const TasksList: React.FC = () => {
 
   const listFormat = useMemo(
     () =>
-      new Intl.ListFormat("en-US", {
+      new Intl.ListFormat("es-MX", {
         style: "long",
         type: "conjunction",
       }),
@@ -182,7 +182,7 @@ export const TasksList: React.FC = () => {
       setDeleteDialogOpen(false);
       showToast(
         <div>
-          Deleted Task -{" "}
+          Contacto eliminado -{" "}
           <b translate="no">{user.tasks.find((task) => task.id === selectedTaskId)?.name}</b>
         </div>,
       );
@@ -290,7 +290,7 @@ export const TasksList: React.FC = () => {
           <SearchInput
             focused
             color="primary"
-            placeholder="Search for task..."
+            placeholder="Buscar Contacto 📲"
             autoComplete="off"
             value={search}
             onChange={(e) => {
@@ -370,7 +370,7 @@ export const TasksList: React.FC = () => {
           <SelectedTasksContainer>
             <div>
               <h3>
-                <RadioButtonChecked /> &nbsp; Selected {multipleSelectedTasks.length} task
+                <RadioButtonChecked /> &nbsp; Seciona {multipleSelectedTasks.length} Contacto
                 {multipleSelectedTasks.length > 1 ? "s" : ""}
               </h3>
               <span translate="no" style={{ fontSize: "14px", opacity: 0.8 }}>
@@ -383,7 +383,7 @@ export const TasksList: React.FC = () => {
             </div>
             {/* TODO: add more features */}
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <Tooltip title="Mark selected as done">
+                <Tooltip title="Marcar Contacto como Favorito">
                 <IconButton
                   sx={{ color: getFontColor(theme.secondary) }}
                   size="large"
@@ -391,12 +391,12 @@ export const TasksList: React.FC = () => {
                 >
                   <DoneAll />
                 </IconButton>
-              </Tooltip>
-              <Tooltip title="Delete selected">
+                </Tooltip>
+                <Tooltip title="Eliminar Contacto">
                 <IconButton color="error" size="large" onClick={handleDeleteSelected}>
                   <Delete />
                 </IconButton>
-              </Tooltip>
+                </Tooltip>
               <Tooltip sx={{ color: getFontColor(theme.secondary) }} title="Cancel">
                 <IconButton size="large" onClick={() => setMultipleSelectedTasks([])}>
                   <CancelRounded />
@@ -415,7 +415,7 @@ export const TasksList: React.FC = () => {
             }}
           >
             <b>
-              Found {reorderTasks(user.tasks).length} task
+              Contacto {reorderTasks(user.tasks).length} encontrado
               {reorderTasks(user.tasks).length > 1 ? "s" : ""}
             </b>
           </div>
@@ -477,9 +477,9 @@ export const TasksList: React.FC = () => {
               ) : null}
               <TaskInfo translate="no">
                 {task.pinned && (
-                  <Pinned translate="yes">
-                    <PushPinRounded fontSize="small" /> &nbsp; Pinned
-                  </Pinned>
+                    <Pinned translate="yes">
+                    <PushPinRounded fontSize="small" /> &nbsp; Fijado
+                    </Pinned>
                 )}
                 <TaskHeader>
                   <TaskName done={task.done}>{highlightMatchingText(task.name)}</TaskName>
@@ -526,13 +526,13 @@ export const TasksList: React.FC = () => {
                   </Tooltip>
                 )}
                 {task.sharedBy && (
-                  <div
+                    <div
                     translate="yes"
                     style={{ opacity: 0.8, display: "flex", alignItems: "center", gap: "4px" }}
-                  >
-                    <Link /> Shared by{" "}
+                    >
+                    <Link /> Compartido por{" "}
                     <span translate={task.sharedBy === "User" ? "yes" : "no"}>{task.sharedBy}</span>
-                  </div>
+                    </div>
                 )}
                 <div
                   style={{
@@ -565,11 +565,11 @@ export const TasksList: React.FC = () => {
             </TaskContainer>
           ))
         ) : (
-          <NoTasks>
-            <span>You don't have any tasks yet</span>
+            <NoTasks>
+            <span>No tienes ningun contacto aún</span>
             <br />
-            Click on the <span>+</span> button to add one
-          </NoTasks>
+            Haz clic en el botón <span>+</span> para agregar 
+            </NoTasks>
         )}
         {search && reorderTasks(user.tasks).length === 0 && user.tasks.length > 0 && (
           <div
@@ -580,9 +580,9 @@ export const TasksList: React.FC = () => {
               marginTop: "18px",
             }}
           >
-            <b>No tasks found</b>
+            <b>No se encontraron ontactos</b>
             <br />
-            Try searching with different keywords.
+            Intenta buscar con diferentes palabras clave.
             <div style={{ marginTop: "14px" }}>
               <TaskIcon scale={0.8} />
             </div>
@@ -618,88 +618,100 @@ export const TasksList: React.FC = () => {
       </TasksContainer>
       <Dialog open={deleteDialogOpen} onClose={cancelDeleteTask}>
         <CustomDialogTitle
-          title="Delete task"
-          subTitle="Confirm to delete task"
+          title="Eliminar contacto"
+          subTitle="Confirma para eliminar el contacto"
           onClose={cancelDeleteTask}
           icon={<Delete />}
         />
         <DialogContent>
           {selectedTask !== undefined && (
-            <>
-              {selectedTask.emoji && (
-                <p
-                  style={{
-                    display: "flex",
-                    justifyContent: "left",
-                    alignItems: "center",
-                    gap: "6px",
-                  }}
-                >
-                  <b>Emoji:</b>{" "}
-                  <Emoji size={28} emojiStyle={user.emojisStyle} unified={selectedTask.emoji} />
-                </p>
-              )}
-              <p>
-                <b>Task Name:</b> <span translate="no">{selectedTask.name}</span>
-              </p>
-              {selectedTask.description && (
-                <p>
-                  <b>Task Description:</b>{" "}
-                  <span translate="no">
-                    {selectedTask.description.replace(URL_REGEX, "[link]")}
-                  </span>
-                </p>
-              )}
-              {selectedTask.category?.[0]?.name && (
-                <p>
-                  <b>{selectedTask.category.length > 1 ? "Categories" : "Category"}:</b>{" "}
-                  <span translate="no">
-                    {listFormat.format(selectedTask.category.map((cat) => cat.name))}
-                  </span>
-                </p>
-              )}
-            </>
+        <>
+          {selectedTask.emoji && (
+            <p
+          style={{
+            display: "flex",
+            justifyContent: "left",
+            alignItems: "center",
+            gap: "6px",
+          }}
+            >
+          <b>Emoji:</b>{" "}
+          <Emoji size={28} emojiStyle={user.emojisStyle} unified={selectedTask.emoji} />
+            </p>
+          )}
+          <p>
+            <b>Nombre del contacto:</b> <span translate="no">{selectedTask.name} {selectedTask.lastName}</span>
+          </p>
+          {selectedTask.email && (
+            <p>
+          <b>Correo electrónico:</b>{" "}
+          <span translate="no">{selectedTask.email}</span>
+            </p>
+          )}
+          {selectedTask.phoneNumber && (
+            <p>
+          <b>Número de teléfono:</b>{" "}
+          <span translate="no">{selectedTask.phoneNumber}</span>
+            </p>
+          )}
+          {selectedTask.description && (
+            <p>
+          <b>Descripción del contacto:</b>{" "}
+          <span translate="no">
+            {selectedTask.description.replace(URL_REGEX, "[link]")}
+          </span>
+            </p>
+          )}
+          {selectedTask.category?.[0]?.name && (
+            <p>
+          <b>{selectedTask.category.length > 1 ? "Categorías" : "Categoría"}:</b>{" "}
+          <span translate="no">
+            {listFormat.format(selectedTask.category.map((cat) => cat.name))}
+          </span>
+            </p>
+          )}
+        </>
           )}
         </DialogContent>
         <DialogActions>
           <DialogBtn onClick={cancelDeleteTask} color="primary">
-            Cancel
+        Cancelar
           </DialogBtn>
           <DialogBtn onClick={confirmDeleteTask} color="error">
-            <DeleteRounded /> &nbsp; Delete
+        <DeleteRounded /> &nbsp; Eliminar
           </DialogBtn>
         </DialogActions>
       </Dialog>
       <Dialog open={deleteSelectedOpen}>
         <CustomDialogTitle
-          title="Delete selected tasks"
-          subTitle="Confirm to delete selected tasks"
+          title="Eliminar contactos seleccionados"
+          subTitle="Confirma para eliminar los contactos seleccionados"
           icon={<DeleteRounded />}
         />
         <DialogContent translate="no">
           {listFormat.format(
-            multipleSelectedTasks
-              .map((taskId) => user.tasks.find((task) => task.id === taskId)?.name)
-              .filter((taskName) => taskName !== undefined) as string[],
+        multipleSelectedTasks
+          .map((taskId) => user.tasks.find((task) => task.id === taskId)?.name)
+          .filter((taskName) => taskName !== undefined) as string[],
           )}
         </DialogContent>
         <DialogActions>
           <DialogBtn onClick={() => setDeleteSelectedOpen(false)} color="primary">
-            Cancel
+        Cancelar
           </DialogBtn>
           <DialogBtn
-            onClick={() => {
-              setUser((prevUser) => ({
-                ...prevUser,
-                tasks: prevUser.tasks.filter((task) => !multipleSelectedTasks.includes(task.id)),
-              }));
-              // Clear the selected task IDs after the operation
-              setMultipleSelectedTasks([]);
-              setDeleteSelectedOpen(false);
-            }}
-            color="error"
+        onClick={() => {
+          setUser((prevUser) => ({
+            ...prevUser,
+            tasks: prevUser.tasks.filter((task) => !multipleSelectedTasks.includes(task.id)),
+          }));
+          // Clear the selected task IDs after the operation
+          setMultipleSelectedTasks([]);
+          setDeleteSelectedOpen(false);
+        }}
+        color="error"
           >
-            Delete
+        Eliminar
           </DialogBtn>
         </DialogActions>
       </Dialog>
