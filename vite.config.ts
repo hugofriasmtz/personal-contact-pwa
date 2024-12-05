@@ -22,8 +22,8 @@ export default defineConfig({
       },
       registerType: "prompt",
       workbox: {
-        globDirectory: "dev-dist",
-        globPatterns: ["**/*.{js,wasm,css,html}"],
+        globDirectory: "dist",
+        globPatterns: ["**/*.{js,wasm,css,html,png,webmanifest,svg,txt}"],
         globIgnores: ["/node_modules/","sw.js","workbox-*.js"],
         // Usar almacenamiento en caché en tiempo de ejecución para importaciones dinámicas
         runtimeCaching: [

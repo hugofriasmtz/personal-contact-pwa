@@ -1,13 +1,10 @@
 import styled from "@emotion/styled";
-import { CancelRounded, EditCalendarRounded, SaveRounded } from "@mui/icons-material";
+import {  EditCalendarRounded, SaveRounded } from "@mui/icons-material";
 import {
   Dialog,
   DialogActions,
   DialogContent,
-  IconButton,
-  InputAdornment,
   TextField,
-  Tooltip,
 } from "@mui/material";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { ColorPicker, CustomDialogTitle, CustomEmojiPicker } from ".";

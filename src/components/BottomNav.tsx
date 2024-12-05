@@ -1,7 +1,6 @@
 import {
   AddRounded,
   CategoryRounded,
-  GetAppRounded,
   PersonRounded,
   TaskAlt,
 } from "@mui/icons-material";

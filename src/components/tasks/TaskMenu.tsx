@@ -1,17 +1,13 @@
 import styled from "@emotion/styled";
 import {
   Cancel,
-  Close,
   ContentCopy,
   DeleteRounded,
-  Done,
   EditRounded,
   LaunchRounded,
-  LinkRounded,
   Pause,
   PlayArrow,
   PushPinRounded,
-  RadioButtonChecked,
   RecordVoiceOver,
   RecordVoiceOverRounded,
 } from "@mui/icons-material";
@@ -23,11 +19,10 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { BottomSheet } from "react-spring-bottom-sheet";
 import "react-spring-bottom-sheet/dist/style.css";
-import { TaskIcon } from "..";
 import { UserContext } from "../../contexts/UserContext";
 import { useResponsiveDisplay } from "../../hooks/useResponsiveDisplay";
 import { Task } from "../../types/user";
-import { calculateDateDifference, generateUUID, showToast } from "../../utils";
+import { calculateDateDifference, generateUUID } from "../../utils";
 import { useTheme } from "@emotion/react";
 import { TaskContext } from "../../contexts/TaskContext";
 import { ColorPalette } from "../../theme/themeConfig";
@@ -40,8 +35,6 @@ export const TaskMenu = () => {
     selectedTaskId,
     anchorEl,
     anchorPosition,
-    multipleSelectedTasks,
-    handleSelectTask,
     setEditModalOpen,
     handleDeleteTask,
     handleCloseMoreMenu,
@@ -61,41 +54,7 @@ export const TaskMenu = () => {
     n(`/task/${taskId}`);
   };
 
-  const handleMarkAsDone = () => {
-    // Toggles the "done" property of the selected task
-    if (selectedTaskId) {
-      handleCloseMoreMenu();
-      const updatedTasks = tasks.map((task) => {
-        if (task.id === selectedTaskId) {
-          return { ...task, done: !task.done };
-        }
-        return task;
-      });
-      setUser((prevUser) => ({
-        ...prevUser,
-        tasks: updatedTasks,
-      }));
-
-      const allTasksDone = updatedTasks.every((task) => task.done);
-
-      if (allTasksDone) {
-        showToast(
-          <div>
-            <b>Todas las tareas completadas</b>
-            <br />
-            <span>Has marcado todas las tareas como completadas. ¡Bien hecho!</span>
-          </div>,
-          {
-            icon: (
-              <div style={{ margin: "-6px 4px -6px -6px" }}>
-                <TaskIcon variant="success" scale={0.18} />
-              </div>
-            ),
-          },
-        );
-      }
-    }
-  };
+  
 
   const handlePin = () => {
     // Toggles the "pinned" property of the selected task

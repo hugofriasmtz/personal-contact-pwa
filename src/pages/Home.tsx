@@ -1,23 +1,17 @@
-import { useState, useEffect, ReactNode, useContext, useMemo, lazy, Suspense } from "react";
+import { useState, useEffect, ReactNode, useContext, lazy, Suspense } from "react";
 import {
   AddButton,
   GreetingHeader,
   GreetingText,
   Offline,
-  ProgressPercentageContainer,
-  StyledProgress,
-  TaskCompletionText,
-  TaskCountHeader,
-  TaskCountTextContainer,
-  TasksCount,
   TasksCountContainer,
 } from "../styles";
 
 import { getRandomGreeting } from "../utils";
 import { Emoji } from "emoji-picker-react";
-import { Box, Tooltip, Typography } from "@mui/material";
+import { Tooltip  } from "@mui/material";
 import { useOnlineStatus } from "../hooks/useOnlineStatus";
-import { AddRounded, TodayRounded, WifiOff } from "@mui/icons-material";
+import { AddRounded, WifiOff } from "@mui/icons-material";
 import { UserContext } from "../contexts/UserContext";
 import { useResponsiveDisplay } from "../hooks/useResponsiveDisplay";
 import { useNavigate } from "react-router-dom";
@@ -32,15 +26,8 @@ const Home = () => {
   const { tasks, emojisStyle, settings, name } = user;
   const [randomGreeting, setRandomGreeting] = useState<string | ReactNode>("");
   const [greetingKey, setGreetingKey] = useState<number>(0);
-  const [completedTasksCount, setCompletedTasksCount] = useState<number>(0);
+ 
 
-  const [tasksWithDeadlineTodayCount, setTasksWithDeadlineTodayCount] = useState<number>(0);
-  const [tasksDueTodayNames, setTasksDueTodayNames] = useState<string[]>([]);
-
-  const completedTaskPercentage = useMemo<number>(
-    () => (completedTasksCount / tasks.length) * 100,
-    [completedTasksCount, tasks.length],
-  );
 
   const isOnline = useOnlineStatus();
   const n = useNavigate();
@@ -58,26 +45,7 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    const completedCount = tasks.filter((task) => task.done).length;
-    setCompletedTasksCount(completedCount);
-
-    const today = new Date().setHours(0, 0, 0, 0);
-
-    const dueTodayTasks = tasks.filter((task) => {
-      if (task.deadline) {
-        const taskDeadline = new Date(task.deadline).setHours(0, 0, 0, 0);
-        return taskDeadline === today && !task.done;
-      }
-      return false;
-    });
-
-    setTasksWithDeadlineTodayCount(dueTodayTasks.length);
-
-    // Use Intl to format and display task names due today
-    const taskNamesDueToday = dueTodayTasks.map((task) => task.name);
-    setTasksDueTodayNames(taskNamesDueToday);
-  }, [tasks]);
+ 
 
   const replaceEmojiCodes = (text: string): ReactNode[] => {
     const emojiRegex = /\*\*(.*?)\*\*/g;

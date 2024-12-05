@@ -3,15 +3,13 @@ import { CategoryBadge, TopBar } from "../components";
 import styled from "@emotion/styled";
 import { PathName } from "../styles";
 import NotFound from "./NotFound";
-import { Clear, Done } from "@mui/icons-material";
-import { Emoji } from "emoji-picker-react";
 import { useContext, useEffect } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { getColorName } from "ntc-ts";
 
 const TaskDetails = () => {
   const { user } = useContext(UserContext);
-  const { tasks, emojisStyle } = user;
+  const { tasks} = user;
   const { id } = useParams();
   const formattedId = id?.replace(".", "");
   const task = tasks.find((task) => task.id.toString().replace(".", "") === formattedId);

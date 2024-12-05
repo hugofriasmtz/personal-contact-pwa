@@ -2,14 +2,13 @@ import { Category, Task } from "../types/user";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AddTaskButton, Container, StyledInput } from "../styles";
-import { AddTaskRounded, CancelRounded } from "@mui/icons-material";
-import { IconButton, InputAdornment, Tooltip } from "@mui/material";
+import { AddTaskRounded } from "@mui/icons-material";
 import { DESCRIPTION_MAX_LENGTH, TASK_NAME_MAX_LENGTH, TASK_PHONE_MAX_LENGTH } from "../constants";
 import { CategorySelect, ColorPicker, TopBar, CustomEmojiPicker } from "../components";
 import { UserContext } from "../contexts/UserContext";
 import { useStorageState } from "../hooks/useStorageState";
 import { useTheme } from "@emotion/react";
-import { generateUUID, getFontColor, isDark, showToast } from "../utils";
+import { generateUUID, getFontColor, showToast } from "../utils";
 import { ColorPalette } from "../theme/themeConfig";
 import InputThemeProvider from "../contexts/InputThemeProvider";
 
@@ -24,7 +23,7 @@ const AddTask = () => {
   const [color, setColor] = useStorageState<string>(theme.primary, "color", "sessionStorage");
   const [description, setDescription] = useStorageState<string>("", "description", "sessionStorage",
   );
-  const [deadline, setDeadline] = useStorageState<string>("", "deadline", "sessionStorage");
+  const [deadline] = useStorageState<string>("", "deadline", "sessionStorage");
   const [nameError, setNameError] = useState<string>("");
   const [lastNameError, setLastNameError] = useState<string>("");
   const [emailError, setEmailError] = useState<string>("");
@@ -36,7 +35,7 @@ const AddTask = () => {
     "sessionStorage",
   );
 
-  const [isDeadlineFocused, setIsDeadlineFocused] = useState<boolean>(false);
+
 
   const n = useNavigate();
 
@@ -120,9 +119,7 @@ const AddTask = () => {
     }
   };
 
-  const handleDeadlineChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDeadline(event.target.value);
-  };
+
 
   const handleAddTask = () => {
     if (name === "") {
