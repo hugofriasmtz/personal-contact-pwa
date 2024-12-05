@@ -457,18 +457,6 @@ export const SettingsDialog: React.FC<SettingsProps> = ({ open, onClose }) => {
           </FormGroup>
         </Tooltip>
         )}
-      <FormGroup>
-        <StyledFormLabel
-        sx={{ opacity: userSettings.doneToBottom ? 1 : 0.8 }}
-        control={
-          <Switch
-          checked={userSettings.doneToBottom}
-          onChange={handleSettingChange("doneToBottom")}
-          />
-        }
-        label="Mover Tareas Realizadas al Fondo"
-        />
-      </FormGroup>
 
       {settings.enableReadAloud && (
         <FormGroup>

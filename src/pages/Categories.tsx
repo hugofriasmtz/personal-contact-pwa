@@ -94,7 +94,7 @@ const Categories = () => {
 
       showToast(
         <div>
-          Deleted category - <b translate="no">{categoryName}.</b>
+          Categoria eleminada - <b translate="no">{categoryName}.</b>
         </div>,
       );
     }
